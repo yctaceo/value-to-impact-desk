@@ -1,14 +1,5 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
-
-const navItems = [
-  ["Profiles", "/profiles"],
-  ["Organizations", "/for-organizations"],
-  ["Donors", "/for-donors"],
-  ["Companies", "/for-companies"],
-  ["Deal Room", "/deal-room"],
-  ["Admin", "/admin"],
-];
+import { LayoutDashboard, ShieldCheck, UserRound } from "lucide-react";
 
 export function SiteHeader() {
   return (
@@ -20,25 +11,24 @@ export function SiteHeader() {
           </span>
           <span>Value-to-Impact Desk</span>
         </Link>
-        <nav className="hidden items-center gap-5 text-sm text-[var(--muted)] lg:flex">
-          {navItems.map(([label, href]) => (
-            <Link key={href} href={href} className="hover:text-[var(--ink)]">
-              {label}
-            </Link>
-          ))}
-        </nav>
         <div className="flex items-center gap-2">
+          <div className="hidden rounded-md border border-[var(--line)] bg-white p-1 text-xs font-semibold sm:flex">
+            <button className="rounded bg-[var(--ink)] px-2 py-1 text-white">KR</button>
+            <button className="px-2 py-1 text-[var(--muted)]">EN</button>
+          </div>
           <Link
-            href="/login"
-            className="hidden rounded-md border border-[var(--line)] bg-white px-3 py-2 text-sm font-semibold sm:block"
+            href="/dashboard"
+            className="hidden items-center gap-2 rounded-md border border-[var(--line)] bg-white px-3 py-2 text-sm font-semibold sm:inline-flex"
           >
-            Login
+            <LayoutDashboard size={16} />
+            Dashboard
           </Link>
           <Link
-            href="/apply"
-            className="rounded-md bg-[var(--ink)] px-3 py-2 text-sm font-semibold text-white"
+            href="/login"
+            className="inline-flex items-center gap-2 rounded-md bg-[var(--ink)] px-3 py-2 text-sm font-semibold text-white"
           >
-            Apply
+            <UserRound size={16} />
+            Login
           </Link>
         </div>
       </div>
@@ -53,9 +43,8 @@ export function SiteFooter() {
         <div>
           <p className="font-semibold">Value-to-Impact Desk</p>
           <p className="mt-2 max-w-xl text-sm leading-6 text-[var(--muted)]">
-            Donation platform이 아니라, 공개자료와 제출자료를 표준화해
-            검증 가능한 Impact Profile과 리포트 초안을 만드는 Trust
-            Infrastructure입니다.
+            앞단은 쉽게 탐색하는 Project Discovery Wall, 뒷단은 증빙자료와
+            월간보고 기반의 Verified Impact Profile로 운영됩니다.
           </p>
         </div>
         <div className="text-sm leading-7 text-[var(--muted)]">

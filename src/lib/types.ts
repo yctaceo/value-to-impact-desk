@@ -61,6 +61,16 @@ export type ImpactProfile = {
   verificationLevel: VerificationLevel;
   verificationStatus: string;
   lastUpdated: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  problemLabel: string;
+  beneficiaryLabel: string;
+  currentNeedLabel: string;
+  requestedAmount?: number;
+  raisedAmount: number;
+  monthlyReportStatus: "미제출" | "작성중" | "제출완료" | "검토중" | "승인" | "보완요청";
+  lastReportMonth: string;
+  favoriteCount: number;
   oneLine: string;
   missionKo: string;
   missionEn?: string;

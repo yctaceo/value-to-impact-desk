@@ -24,6 +24,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "커피와 베이커리 제품이 놓인 테이블",
+    problemLabel: "발달장애인 고용",
+    beneficiaryLabel: "발달장애인 근로자",
+    currentNeedLabel: "기업구매 / 정기 파트너십",
+    requestedAmount: 30000000,
+    raisedAmount: 12400000,
+    monthlyReportStatus: "제출완료",
+    lastReportMonth: "2026.07",
+    favoriteCount: 128,
     oneLine:
       "발달장애인이 일하는 방식을 기업 서비스와 제품으로 구조화한 한국 사회적기업.",
     missionKo:
@@ -96,6 +107,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1607006483224-16bc32c93691?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "친환경 비누와 생활용품",
+    problemLabel: "발달장애 / 환경",
+    beneficiaryLabel: "발달장애인 근로자",
+    currentNeedLabel: "기업 선물 / ESG 구매",
+    requestedAmount: 20000000,
+    raisedAmount: 8600000,
+    monthlyReportStatus: "검토중",
+    lastReportMonth: "2026.07",
+    favoriteCount: 94,
     oneLine:
       "발달장애인 고용과 플라스틱 저감 생활용품을 결합한 제품 기반 사회적기업.",
     missionKo:
@@ -159,6 +181,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "잡지와 신문이 놓인 가판대",
+    problemLabel: "홈리스 자립",
+    beneficiaryLabel: "주거취약계층",
+    currentNeedLabel: "후원 / 캠페인 파트너십",
+    requestedAmount: 50000000,
+    raisedAmount: 18200000,
+    monthlyReportStatus: "제출완료",
+    lastReportMonth: "2026.07",
+    favoriteCount: 151,
     oneLine:
       "주거취약계층 홈리스의 자립을 잡지 판매와 비즈니스 솔루션으로 지원하는 비영리 사회적기업.",
     missionKo:
@@ -227,6 +260,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "접근성 기술 장비와 전자기기",
+    problemLabel: "장애 접근성",
+    beneficiaryLabel: "시각장애인 / 교통약자",
+    currentNeedLabel: "투자 검토 / 공공구매",
+    requestedAmount: 100000000,
+    raisedAmount: 37000000,
+    monthlyReportStatus: "작성중",
+    lastReportMonth: "2026.07",
+    favoriteCount: 73,
     oneLine:
       "시각장애인과 교통약자를 위한 촉각 디스플레이와 배리어프리 키오스크를 개발하는 소셜벤처.",
     missionKo:
@@ -293,6 +337,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1603006905393-c6335182aac1?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "캔들과 바디케어 제품",
+    problemLabel: "여성 회복 / 고용",
+    beneficiaryLabel: "생존 여성",
+    currentNeedLabel: "후원 / 기업 선물 구매",
+    requestedAmount: 60000000,
+    raisedAmount: 22100000,
+    monthlyReportStatus: "승인",
+    lastReportMonth: "2026.07",
+    favoriteCount: 116,
     oneLine:
       "성착취, 인신매매, 중독 생존 여성에게 주거, 회복, 고용을 제공하는 비영리 사회적기업.",
     missionKo:
@@ -363,6 +418,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "교육 워크숍을 위한 노트와 자료",
+    problemLabel: "여성 경제자립",
+    beneficiaryLabel: "취약 여성과 소녀",
+    currentNeedLabel: "후원 / 고용 파트너십",
+    requestedAmount: 80000000,
+    raisedAmount: 30400000,
+    monthlyReportStatus: "제출완료",
+    lastReportMonth: "2026.07",
+    favoriteCount: 88,
     oneLine:
       "인신매매의 경제적 취약성을 줄이기 위해 여성과 소녀에게 안전한 고용 경로를 만드는 비영리.",
     missionKo:
@@ -428,6 +494,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 2,
     verificationStatus: "Sample Evidence Submitted",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1519682577862-22b62b24e493?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "종이 공예 재료와 꽃 장식",
+    problemLabel: "경계선지능 청년 고용",
+    beneficiaryLabel: "경계선지능 청년",
+    currentNeedLabel: "후원 / 기업행사 설치",
+    requestedAmount: 30000000,
+    raisedAmount: 8400000,
+    monthlyReportStatus: "제출완료",
+    lastReportMonth: "2026.07",
+    favoriteCount: 67,
     oneLine:
       "경계선지능 청년에게 대형 종이꽃 공예를 교육하고 기업 행사 아트 설치로 연결하는 샘플 프로필.",
     missionKo:
@@ -486,6 +563,17 @@ export const profiles: ImpactProfile[] = [
     verificationLevel: 1,
     verificationStatus: "Sample Self-Reported",
     lastUpdated: "2026-07-09",
+    imageUrl:
+      "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1200&q=80",
+    imageAlt: "수공예 제품과 작업 도구",
+    problemLabel: "여성 회복 / 안전한 일",
+    beneficiaryLabel: "취약 여성",
+    currentNeedLabel: "기업 선물 구매",
+    requestedAmount: 25000000,
+    raisedAmount: 5900000,
+    monthlyReportStatus: "검토중",
+    lastReportMonth: "2026.07",
+    favoriteCount: 44,
     oneLine:
       "착취 피해 여성의 회복과 경제적 독립을 수공예 제품 생산으로 연결하는 Freedom Business 샘플.",
     missionKo:

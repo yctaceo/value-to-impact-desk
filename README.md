@@ -9,9 +9,11 @@ This MVP is not a donation platform, investment brokerage platform, or marketpla
 - Next.js + TypeScript + Tailwind
 - Korean-first, English-ready UI
 - Public landing pages
+- Project Discovery Wall home UX
 - Organization intake form
 - Monthly performance report form
 - Admin review dashboard
+- Role-based `/dashboard` for donor/investor, organization, company/CSR, and admin
 - Private deal-room style listing
 - Public-source and fictional sample organization seed data
 - Supabase Auth client scaffold
@@ -66,6 +68,13 @@ added, also run:
 
 ```text
 supabase/migrations/202607090002_korea_scouting_import_support.sql
+```
+
+The dashboard UX adds favorites, record-only donations/investments, receipts,
+impact metrics, and report download tracking:
+
+```text
+supabase/migrations/202607090003_dashboard_tracking_tables.sql
 ```
 
 The migration creates:
@@ -157,6 +166,8 @@ upserts `organizations` and `impact_profiles`, and inserts an initial
 ## Key routes
 
 - `/` landing
+- `/` project discovery wall with filters and search
+- `/dashboard` role-based dashboard
 - `/profiles` profile list
 - `/profiles/[slug]` profile detail
 - `/apply` organization intake
@@ -165,6 +176,20 @@ upserts `organizations` and `impact_profiles`, and inserts an initial
 - `/admin` review dashboard
 - `/admin/organizations` admin organization table
 - `/admin/scouting` Korea public-source scouting module
+
+## UX direction
+
+The frontend is intentionally discovery-first:
+
+- Home is a Kickstarter/Pinterest-style project wall.
+- Public navigation is reduced to logo, language toggle, dashboard, and login.
+- Admin is hidden from public navigation and remains directly accessible.
+- Donor/investor dashboard focuses on favorites, supported organizations,
+  donation/investment records, impact metrics, and report downloads.
+- Organization dashboard focuses on monthly activity reports, donation/product
+  sales tracking, employment fields, receipts, and project card preview.
+- Company/CSR dashboard focuses on procurement-ready services, CSR report
+  downloads, and employee participation candidates.
 - `/deal-room` private opportunity listing
 - `/sample-report` AI report preview
 - `/login` Supabase magic link or demo role shortcuts
