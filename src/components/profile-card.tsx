@@ -155,6 +155,84 @@ export function ProfileCard({ profile }: { profile: ImpactProfile }) {
   );
 }
 
+export function ProjectCard({
+  profile,
+  variant = "full",
+}: {
+  profile: ImpactProfile;
+  variant?: "full" | "featured" | "compact";
+}) {
+  if (variant === "full") {
+    return <ProfileCard profile={profile} />;
+  }
+
+  const percent =
+    profile.requestedAmount && profile.requestedAmount > 0
+      ? Math.min(100, Math.round((profile.raisedAmount / profile.requestedAmount) * 100))
+      : 0;
+
+  return (
+    <article
+      className={cn(
+        "marketing-panel flex h-full flex-col overflow-hidden bg-white",
+        variant === "compact" && "rounded-lg",
+      )}
+    >
+      <div
+        className={cn(
+          "relative overflow-hidden bg-[#dfe8df]",
+          variant === "compact" ? "aspect-[16/10]" : "aspect-[4/3]",
+        )}
+      >
+        {profile.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={profile.imageUrl}
+            alt={profile.imageAlt ?? profile.nameKo}
+            className="h-full w-full object-cover transition-transform duration-300 hover:scale-[1.03]"
+          />
+        ) : null}
+        <span className="absolute left-3 top-3 rounded-full bg-white/92 px-3 py-1 text-xs font-semibold">
+          {profile.category === "sample" ? "Sample" : "공개자료 기반"}
+        </span>
+      </div>
+      <div className={cn("flex flex-1 flex-col", variant === "compact" ? "p-4" : "p-5")}>
+        <h3 className={cn("font-semibold", variant === "compact" ? "text-lg" : "text-xl")}>
+          {profile.nameKo}
+        </h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--muted)]">
+          {profile.oneLine}
+        </p>
+        <p className="mt-4 text-sm">
+          <strong>현재 필요:</strong> {profile.currentNeedLabel}
+        </p>
+        <div className="mt-4">
+          <div className="flex items-center justify-between text-xs text-[var(--muted)]">
+            <span>{formatKRW(profile.raisedAmount)} 기록</span>
+            {profile.requestedAmount ? <span>{percent}%</span> : null}
+          </div>
+          {profile.requestedAmount ? (
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#e8ede6]">
+              <div className="h-full rounded-full bg-[var(--accent)]" style={{ width: `${percent}%` }} />
+            </div>
+          ) : null}
+        </div>
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <span className="rounded-full bg-[var(--accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--ink)]">
+            L{profile.verificationLevel} {profile.sourceType === "Fictional Sample" ? "Sample" : "검증 단계"}
+          </span>
+          <Link
+            href={`/profiles/${profile.slug}`}
+            className="rounded-md bg-[var(--ink)] px-3 py-2 text-sm font-semibold text-white"
+          >
+            상세보기
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export function ProfileEvidenceBox({ profile }: { profile: ImpactProfile }) {
   return (
     <div className="panel p-5">

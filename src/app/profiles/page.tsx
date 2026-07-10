@@ -1,23 +1,24 @@
+import { ProjectDiscoveryWall } from "@/components/project-discovery-wall";
 import { PageShell } from "@/components/site-shell";
-import { ProfileCard } from "@/components/profile-card";
-import { SectionHeader } from "@/components/ui";
 import { profiles } from "@/lib/seed-data";
 
 export default function ProfilesPage() {
   return (
     <PageShell>
-      <section className="container-page py-14">
-        <SectionHeader
-          eyebrow="Impact Profiles"
-          title="검증 상태가 먼저 보이는 프로필 목록"
-          body="실제 조직은 공개자료 기반으로 표시되며, 현장 확인 전에는 Not Field Verified를 명확히 표시합니다. Public 페이지에는 샘플 프로필을 우선 노출할 수 있습니다."
-        />
-        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {profiles.map((profile) => (
-            <ProfileCard key={profile.id} profile={profile} />
-          ))}
+      <section className="bg-[var(--sage-100)] py-12">
+        <div className="container-page">
+          <p className="eyebrow">Project Discovery</p>
+          <h1 className="mt-3 max-w-4xl text-4xl font-semibold tracking-[-0.02em] md:text-6xl">
+            사회문제, 필요한 지원, 검증 단계로 프로젝트를 탐색하세요.
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+            이 목록은 프로젝트 발견을 위한 입구입니다. 실제 조직은 공개자료 기반
+            상태와 검증 단계를 명확히 표시하며, 직접 결제나 투자중개 기능은
+            제공하지 않습니다.
+          </p>
         </div>
       </section>
+      <ProjectDiscoveryWall profiles={profiles} />
     </PageShell>
   );
 }

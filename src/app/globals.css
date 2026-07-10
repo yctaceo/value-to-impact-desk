@@ -1,14 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f8f4;
-  --foreground: #17221c;
-  --muted: #66746b;
-  --line: #dce4da;
+  --background: #f5f7f2;
+  --foreground: #14211b;
+  --muted: #647168;
+  --line: #d8e1d7;
   --panel: #ffffff;
-  --ink: #0b2f2c;
-  --accent: #1f6f5b;
-  --gold: #b48728;
+  --ink: #082f2b;
+  --ink-strong: #052521;
+  --accent: #1f765f;
+  --accent-soft: #e7f2ec;
+  --sage-50: #f3f7f2;
+  --sage-100: #e8efe7;
+  --cream: #f7f2e8;
+  --gold: #ad812d;
+  --warning-bg: #fff8e8;
+  --warning-border: #edd28f;
+  --success-bg: #e9f7ef;
+  --success-border: #9dd8b4;
 }
 
 @theme inline {
@@ -40,7 +49,7 @@ select {
 }
 
 .container-page {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1240px, calc(100% - 32px));
   margin: 0 auto;
 }
 
@@ -48,6 +57,21 @@ select {
   border: 1px solid var(--line);
   background: var(--panel);
   border-radius: 8px;
+}
+
+.marketing-section {
+  padding-block: clamp(4rem, 8vw, 8rem);
+}
+
+.marketing-panel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 16px;
+}
+
+.dark-section {
+  background: var(--ink);
+  color: white;
 }
 
 .eyebrow {
@@ -74,4 +98,24 @@ select {
 
 .muted {
   color: var(--muted);
+}
+
+:focus-visible {
+  outline: 3px solid rgb(31 118 95 / 35%);
+  outline-offset: 3px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

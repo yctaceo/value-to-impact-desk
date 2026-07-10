@@ -179,10 +179,11 @@ upserts `organizations` and `impact_profiles`, and inserts an initial
 
 ## UX direction
 
-The frontend is intentionally discovery-first:
+The frontend is intentionally mission-led and discovery-first:
 
-- Home is a Kickstarter/Pinterest-style project wall.
-- Public navigation is reduced to logo, language toggle, dashboard, and login.
+- Home explains why verified impact infrastructure is needed before showing featured projects.
+- Full search/filter discovery lives on `/profiles`.
+- Public navigation links to projects, how it works, trust principles, audience paths, dashboard, login, and organization intake.
 - Admin is hidden from public navigation and remains directly accessible.
 - Donor/investor dashboard focuses on favorites, supported organizations,
   donation/investment records, impact metrics, and report downloads.
