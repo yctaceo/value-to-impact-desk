@@ -51,7 +51,7 @@ export function LoginForm() {
         {message ? <p className="text-sm text-[var(--muted)]">{message}</p> : null}
       </div>
       {!configured ? (
-        <div className="mt-6 rounded-md bg-[#f7f8f4] p-4">
+        <div className="mt-6 rounded-md bg-[#fbfaf8] p-4">
           <p className="text-sm font-semibold">Demo role shortcuts</p>
           <div className="mt-3 grid gap-2">
             {roleCards.map((card) => (

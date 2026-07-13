@@ -269,7 +269,7 @@ export function ProfileEvidenceBox({ profile }: { profile: ImpactProfile }) {
         {profile.evidence.map((item) => (
           <div
             key={item.label}
-            className="flex items-center justify-between rounded-md bg-[#f7f8f4] px-3 py-2 text-sm"
+            className="flex items-center justify-between rounded-md bg-[#fbfaf8] px-3 py-2 text-sm"
           >
             <span>{item.label}</span>
             <span className="font-semibold text-[var(--muted)]">{item.status}</span>

@@ -51,7 +51,7 @@ export default function CompanyDashboardPage() {
               </div>
               <div className="mt-5 grid gap-3">
                 {portfolio.map((project) => (
-                  <div key={project.id} className="rounded-md bg-[#f7f8f4] p-4">
+                  <div key={project.id} className="rounded-md bg-[#fbfaf8] p-4">
                     <div className="flex justify-between gap-4">
                       <div>
                         <p className="font-semibold">{project.organizationKo}</p>
@@ -71,7 +71,7 @@ export default function CompanyDashboardPage() {
               </div>
               <div className="mt-5 grid gap-3">
                 {["CSR evidence pack", "Board one-page brief", "Donation receipt appendix"].map((item) => (
-                  <div key={item} className="flex items-center justify-between gap-3 rounded-md bg-[#f7f8f4] p-3">
+                  <div key={item} className="flex items-center justify-between gap-3 rounded-md bg-[#fbfaf8] p-3">
                     <span className="text-sm font-semibold">{item}</span>
                     <DemoActionButton label="Download" doneLabel="Ready" />
                   </div>
@@ -87,7 +87,7 @@ export default function CompanyDashboardPage() {
             </div>
             <div className="mt-5 grid gap-4">
               {portfolio.map((project) => (
-                <div key={project.slug} className="grid gap-4 rounded-md bg-[#f7f8f4] p-4 md:grid-cols-[1fr_auto]">
+                <div key={project.slug} className="grid gap-4 rounded-md bg-[#fbfaf8] p-4 md:grid-cols-[1fr_auto]">
                   <div>
                     <p className="font-semibold">{project.titleKo}</p>
                     <p className="mt-2 text-sm leading-6 text-[var(--muted)]">

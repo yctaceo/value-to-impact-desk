@@ -68,7 +68,7 @@ export default function AdminScoutingPage() {
           <h2 className="text-xl font-semibold">P1 First-contact Candidates</h2>
           <div className="mt-5 grid gap-2 md:grid-cols-3">
             {p1FirstContactCandidates.map((name, index) => (
-              <div key={name} className="rounded-md bg-[#f7f8f4] px-4 py-3">
+              <div key={name} className="rounded-md bg-[#fbfaf8] px-4 py-3">
                 <span className="mr-2 text-sm text-[var(--muted)]">
                   {index + 1}.
                 </span>

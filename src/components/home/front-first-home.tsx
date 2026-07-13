@@ -1,114 +1,82 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  BadgeCheck,
   BarChart3,
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
-  ClipboardCheck,
+  ClipboardList,
   FileDown,
   FileText,
-  Gauge,
-  HandCoins,
-  Layers3,
+  FolderCheck,
+  Handshake,
   Search,
-  ShieldCheck,
+  UploadCloud,
 } from "lucide-react";
 import { getFeaturedDemoProjects } from "@/data/demo/projects";
 import type { Lang } from "@/lib/i18n";
 import { pickLang } from "@/lib/i18n";
 
-const deskStats = [
-  { value: "03", labelKo: "검토 중인 한국 파일럿", labelEn: "Korea pilot projects in review" },
-  { value: "4", labelKo: "검증 레벨", labelEn: "verification levels" },
-  { value: "30d", labelKo: "월간보고 주기", labelEn: "monthly reporting cadence" },
+const companyTasks = [
+  "구매·후원 후보 비교",
+  "검증 상태 확인",
+  "월간 업데이트 검토",
+  "CSR 리포트 다운로드",
 ];
 
-const pipeline = [
+const organizationTasks = [
+  "조직 프로필 등록",
+  "월간 활동보고 제출",
+  "사진·문서 증빙 연결",
+  "기업 문의 확인",
+];
+
+const workflow = [
   {
     icon: Search,
-    labelKo: "발견",
-    labelEn: "Discover",
-    bodyKo: "사회문제, 지역, 기업구매 가능성, 필요한 지원으로 프로젝트를 찾습니다.",
-    bodyEn: "Find projects by issue, region, procurement fit, and requested support.",
+    titleKo: "찾기",
+    titleEn: "Find",
+    bodyKo: "기업구매, 후원, 임직원 참여, 투자 검토에 맞는 프로젝트를 고릅니다.",
+    bodyEn: "Choose projects for procurement, giving, employee engagement, or review.",
   },
   {
-    icon: ShieldCheck,
-    labelKo: "검증",
-    labelEn: "Verify",
-    bodyKo: "공개자료, 조직 제출자료, 증빙, 리뷰 이력을 분리해 표시합니다.",
-    bodyEn: "Separate public sources, organization submissions, evidence, and review history.",
+    icon: BadgeCheck,
+    titleKo: "확인",
+    titleEn: "Check",
+    bodyKo: "공개자료, 조직 제출, 증빙 검토, 현장 확인 상태를 분리해 봅니다.",
+    bodyEn: "See public-source, submitted, evidence-reviewed, and field-verified status separately.",
   },
   {
-    icon: BarChart3,
-    labelKo: "추적",
-    labelEn: "Track",
-    bodyKo: "지원 이후 활동, 지출, 참여자, 고용, 다음 계획을 월별로 갱신합니다.",
-    bodyEn: "Update activities, spending, participants, jobs, and next plans each month.",
+    icon: ClipboardList,
+    titleKo: "업데이트",
+    titleEn: "Update",
+    bodyKo: "비영리는 월간 활동·지출·성과를 올리고, 기업은 변경 사항을 확인합니다.",
+    bodyEn: "Organizations submit monthly activity, spend, and results while companies review updates.",
   },
   {
     icon: FileDown,
-    labelKo: "출력",
-    labelEn: "Report",
-    bodyKo: "CSR팀과 후원자가 바로 읽을 수 있는 근거 연결 리포트를 만듭니다.",
-    bodyEn: "Produce source-linked reports for CSR teams and sponsors.",
+    titleKo: "출력",
+    titleEn: "Export",
+    bodyKo: "후원 증빙, 구매 근거, CSR 보고서 초안을 내려받습니다.",
+    bodyEn: "Download donor evidence, procurement notes, and CSR report drafts.",
   },
 ];
 
-const roleCards = [
-  {
-    icon: Building2,
-    titleKo: "현장 조직",
-    titleEn: "Organizations",
-    bodyKo: "프로젝트 설명, 활동 사진, 지출, 참여자 변화, 다음 달 계획을 반복 가능한 월간보고로 올립니다.",
-    bodyEn: "Submit project context, activity evidence, spend, participant change, and next plans as repeatable monthly reports.",
-    href: "/apply",
-    ctaKo: "프로젝트 등록",
-    ctaEn: "Register project",
-  },
-  {
-    icon: BriefcaseBusiness,
-    titleKo: "기업 CSR·구매팀",
-    titleEn: "Companies",
-    bodyKo: "후원, 구매, 임직원 참여 후보를 비교하고 내부 보고에 필요한 근거를 한 흐름으로 관리합니다.",
-    bodyEn: "Compare giving, procurement, and employee engagement candidates with evidence ready for internal reporting.",
-    href: "/dashboard/company",
-    ctaKo: "기업 대시보드",
-    ctaEn: "Company dashboard",
-  },
-  {
-    icon: HandCoins,
-    titleKo: "후원자·투자자",
-    titleEn: "Donors and investors",
-    bodyKo: "지원 전에는 검증 상태를 보고, 지원 후에는 변화와 보고서 출력물을 확인합니다.",
-    bodyEn: "Check verification status before support, then follow updates and downloadable reports after support.",
-    href: "/projects",
-    ctaKo: "프로젝트 탐색",
-    ctaEn: "Explore projects",
-  },
-];
-
-const verificationRows = [
-  ["Public-source", "공개자료 기반", "Official links, media, public product pages"],
-  ["Submitted", "조직 제출", "Monthly activity, spend, evidence files"],
-  ["Evidence-reviewed", "증빙 검토", "Reviewer checks claims against source fields"],
-  ["Field-verified", "현장 확인", "Offline review or partner verification"],
-];
-
-function CtaLink({
+function PrimaryLink({
   href,
   children,
-  variant = "primary",
+  tone = "dark",
 }: {
   href: string;
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "light";
+  tone?: "dark" | "light" | "outline";
 }) {
   const className =
-    variant === "primary"
-      ? "bg-[var(--ink)] text-white hover:bg-[var(--ink-strong)]"
-      : variant === "light"
-        ? "border border-white/25 text-white hover:bg-white/10"
+    tone === "dark"
+      ? "bg-[var(--ink)] text-white hover:bg-[#111018]"
+      : tone === "light"
+        ? "bg-white text-[var(--ink)] hover:bg-[#f4f1ed]"
         : "border border-[var(--line)] bg-white text-[var(--ink)] hover:border-[var(--accent)]";
 
   return (
@@ -117,39 +85,101 @@ function CtaLink({
       className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition ${className}`}
     >
       {children}
+      <ArrowRight size={16} />
     </Link>
   );
 }
 
-function DeskPreview({ lang }: { lang: Lang }) {
-  const [primary, secondary] = getFeaturedDemoProjects();
+function UserPathCard({
+  icon: Icon,
+  title,
+  body,
+  tasks,
+  href,
+  cta,
+  dark = false,
+}: {
+  icon: typeof BriefcaseBusiness;
+  title: string;
+  body: string;
+  tasks: string[];
+  href: string;
+  cta: string;
+  dark?: boolean;
+}) {
+  return (
+    <div
+      className={`flex h-full flex-col rounded-lg border p-5 ${
+        dark
+          ? "border-[#2e2a37] bg-[var(--ink)] text-white"
+          : "border-[var(--line)] bg-white text-[var(--foreground)]"
+      }`}
+    >
+      <div
+        className={`flex h-10 w-10 items-center justify-center rounded-md ${
+          dark ? "bg-white text-[var(--ink)]" : "bg-[var(--accent-soft)] text-[var(--accent)]"
+        }`}
+      >
+        <Icon size={20} />
+      </div>
+      <h2 className="mt-5 text-2xl font-semibold leading-tight">{title}</h2>
+      <p className={`mt-3 leading-7 ${dark ? "text-white/72" : "text-[var(--muted)]"}`}>
+        {body}
+      </p>
+      <div className="mt-5 grid gap-2">
+        {tasks.map((task) => (
+          <div key={task} className="flex items-center gap-2 text-sm">
+            <CheckCircle2 size={16} className={dark ? "text-[#ffbd8f]" : "text-[var(--accent)]"} />
+            <span>{task}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-auto pt-6">
+        <PrimaryLink href={href} tone={dark ? "light" : "dark"}>
+          {cta}
+        </PrimaryLink>
+      </div>
+    </div>
+  );
+}
+
+function HomeWorkspace({ lang }: { lang: Lang }) {
+  const projects = getFeaturedDemoProjects();
+  const [first, second] = projects;
 
   return (
-    <div className="border border-[var(--line)] bg-white shadow-sm">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--line)] bg-[#f8faf8] px-4 py-3">
+    <div className="overflow-hidden rounded-lg border border-[var(--line)] bg-white shadow-[0_24px_80px_rgba(32,26,32,0.12)]">
+      <div className="flex items-center justify-between gap-4 border-b border-[var(--line)] bg-[#fbfaf8] px-5 py-4">
         <div>
-          <p className="text-sm font-semibold text-[var(--ink)]">Impact Desk</p>
+          <p className="text-sm font-semibold text-[var(--ink)]">
+            {pickLang(lang, "오늘의 작업", "Today")}
+          </p>
           <p className="text-xs text-[var(--muted)]">
-            {pickLang(lang, "기업 검토용 라이브 워크스페이스", "Live workspace for company review")}
+            {pickLang(lang, "기업 검토와 조직 보고가 만나는 곳", "Where company review meets organization reporting")}
           </p>
         </div>
-        <span className="inline-flex items-center gap-2 rounded-md bg-[var(--accent-soft)] px-3 py-2 text-xs font-semibold text-[var(--accent)]">
-          <Gauge size={14} />
-          {pickLang(lang, "Supabase 없이 데모 구동", "Demo runs without Supabase")}
+        <span className="rounded-md bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white">
+          {pickLang(lang, "3개 후보", "3 candidates")}
         </span>
       </div>
 
-      <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[0.88fr_1.12fr]">
-        <div className="bg-white p-4">
-          <p className="text-xs font-bold uppercase text-[var(--muted)]">Project Queue</p>
+      <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[1.05fr_0.95fr]">
+        <section className="bg-white p-5">
+          <div className="flex items-center justify-between gap-3">
+            <h3 className="font-semibold">{pickLang(lang, "검토 후보", "Shortlist")}</h3>
+            <Link href="/projects" className="text-sm font-semibold text-[var(--accent)]">
+              {pickLang(lang, "전체 보기", "View all")}
+            </Link>
+          </div>
+
           <div className="mt-4 grid gap-3">
-            {[primary, secondary].map((project, index) => (
+            {[first, second].map((project, index) => (
               <Link
                 key={project.id}
                 href={`/projects/${project.slug}`}
-                className="grid gap-3 border border-[var(--line)] bg-white p-3 hover:border-[var(--accent)] sm:grid-cols-[86px_1fr]"
+                className="grid gap-3 rounded-md border border-[var(--line)] p-3 transition hover:border-[var(--accent)] sm:grid-cols-[90px_1fr]"
               >
-                <div className="h-20 overflow-hidden bg-[#e7edf4]">
+                <div className="h-20 overflow-hidden rounded-md bg-[#ece7df]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={project.imageUrl}
@@ -158,156 +188,135 @@ function DeskPreview({ lang }: { lang: Lang }) {
                   />
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-[var(--accent)]">
-                    {index === 0 ? "Evidence-reviewed candidate" : "Public-source candidate"}
-                  </p>
-                  <h3 className="mt-1 line-clamp-2 text-sm font-semibold leading-5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-md bg-[#f5e9ff] px-2 py-1 text-xs font-semibold text-[#6935a6]">
+                      {index === 0 ? "Evidence review" : "Public source"}
+                    </span>
+                    <span className="text-xs font-semibold text-[var(--muted)]">
+                      {project.latestUpdate}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm font-semibold leading-5">
                     {pickLang(lang, project.titleKo, project.titleEn)}
-                  </h3>
-                  <p className="mt-2 text-xs text-[var(--muted)]">
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
                     {pickLang(lang, project.currentNeedKo, project.currentNeedEn)}
                   </p>
                 </div>
               </Link>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="bg-white p-4">
-          <div className="grid gap-3 md:grid-cols-3">
-            {deskStats.map((stat) => (
-              <div key={stat.value} className="border border-[var(--line)] bg-[#fbfcfb] p-3">
-                <p className="text-2xl font-semibold text-[var(--ink)]">{stat.value}</p>
-                <p className="mt-1 text-xs leading-5 text-[var(--muted)]">
-                  {pickLang(lang, stat.labelKo, stat.labelEn)}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 border border-[var(--line)]">
-            <div className="border-b border-[var(--line)] bg-[#fff8eb] px-4 py-3">
-              <p className="text-sm font-semibold">
-                {pickLang(lang, "이번 달 보고서 초안", "Monthly report draft")}
-              </p>
+        <section className="grid bg-white">
+          <div className="border-b border-[var(--line)] p-5">
+            <div className="flex items-center gap-2">
+              <FileText size={18} className="text-[var(--accent)]" />
+              <h3 className="font-semibold">{pickLang(lang, "리포트 준비", "Report readiness")}</h3>
             </div>
-            <div className="grid gap-4 p-4 md:grid-cols-[1fr_0.86fr]">
-              <div>
-                <p className="text-xs font-semibold text-[var(--muted)]">
-                  {pickLang(lang, primary.organizationKo, primary.organizationEn)}
-                </p>
-                <h3 className="mt-2 text-2xl font-semibold leading-8">
-                  {pickLang(lang, "기업 구매가 고용과 보고 가능한 임팩트로 이어지는지 확인합니다.", "Check whether procurement turns into employment and reportable impact.")}
-                </h3>
-                <div className="mt-4 grid gap-2 text-sm text-[var(--muted)]">
-                  <p>Evidence: {pickLang(lang, primary.evidenceKo[0], primary.evidenceEn[0])}</p>
-                  <p>Metric: {pickLang(lang, primary.metricsKo[0], primary.metricsEn[0])}</p>
-                  <p>Update: {primary.latestUpdate}</p>
+            <div className="mt-4 grid gap-3">
+              {[
+                ["프로젝트 근거", "2/3 complete"],
+                ["월간 활동보고", "submitted"],
+                ["사진·문서 증빙", "needs review"],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between gap-3 rounded-md bg-[#f6f2ed] px-3 py-3">
+                  <span className="text-sm font-semibold">{label}</span>
+                  <span className="text-xs font-semibold text-[var(--muted)]">{value}</span>
                 </div>
-              </div>
-              <div className="bg-[var(--ink)] p-4 text-white">
-                <p className="text-xs font-semibold text-white/70">Release Gate</p>
-                <div className="mt-4 grid gap-3">
-                  {["Claim source", "Evidence status", "Downloadable report"].map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 size={16} className="shrink-0 text-[#8be0bf]" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-                <CtaLink href="/sample-report" variant="light">
-                  <FileDown size={16} />
-                  {pickLang(lang, "리포트 보기", "View report")}
-                </CtaLink>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
+
+          <div className="bg-[#2f2338] p-5 text-white">
+            <p className="text-xs font-semibold uppercase text-[#ffbd8f]">Next action</p>
+            <h3 className="mt-2 text-2xl font-semibold leading-8">
+              {pickLang(
+                lang,
+                "베어베터 구매형 임팩트 브리프를 검토하세요.",
+                "Review the Bear Better procurement impact brief.",
+              )}
+            </h3>
+            <p className="mt-3 text-sm leading-6 text-white/72">
+              {pickLang(
+                lang,
+                "기업 구매가 고용 유지와 어떤 지표로 연결되는지 확인할 수 있습니다.",
+                "Check how procurement connects to employment retention metrics.",
+              )}
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <PrimaryLink href={`/projects/${first.slug}`} tone="light">
+                {pickLang(lang, "프로젝트 보기", "Open project")}
+              </PrimaryLink>
+              <PrimaryLink href="/sample-report" tone="light">
+                {pickLang(lang, "리포트 보기", "View report")}
+              </PrimaryLink>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
 }
 
-function PipelineStep({
-  step,
-  index,
+function WorkflowCard({
+  item,
   lang,
+  index,
 }: {
-  step: (typeof pipeline)[number];
-  index: number;
+  item: (typeof workflow)[number];
   lang: Lang;
+  index: number;
 }) {
-  const Icon = step.icon;
+  const Icon = item.icon;
 
   return (
-    <div className="border border-[var(--line)] bg-white p-5">
-      <div className="flex items-center justify-between gap-3">
+    <div className="rounded-lg border border-[var(--line)] bg-white p-5">
+      <div className="flex items-center justify-between">
         <Icon size={22} className="text-[var(--accent)]" />
         <span className="text-sm font-semibold text-[var(--muted)]">0{index + 1}</span>
       </div>
-      <h3 className="mt-5 text-xl font-semibold">{pickLang(lang, step.labelKo, step.labelEn)}</h3>
+      <h3 className="mt-5 text-xl font-semibold">{pickLang(lang, item.titleKo, item.titleEn)}</h3>
       <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-        {pickLang(lang, step.bodyKo, step.bodyEn)}
+        {pickLang(lang, item.bodyKo, item.bodyEn)}
       </p>
     </div>
   );
 }
 
-function RoleCard({
-  card,
-  lang,
-}: {
-  card: (typeof roleCards)[number];
-  lang: Lang;
-}) {
-  const Icon = card.icon;
-
-  return (
-    <div className="flex h-full flex-col border border-[var(--line)] bg-white p-6">
-      <Icon size={24} className="text-[var(--accent)]" />
-      <h3 className="mt-5 text-2xl font-semibold">{pickLang(lang, card.titleKo, card.titleEn)}</h3>
-      <p className="mt-4 leading-7 text-[var(--muted)]">{pickLang(lang, card.bodyKo, card.bodyEn)}</p>
-      <Link
-        href={card.href}
-        className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-[var(--ink)]"
-      >
-        {pickLang(lang, card.ctaKo, card.ctaEn)}
-        <ArrowRight size={16} />
-      </Link>
-    </div>
-  );
-}
-
-function FeaturedProjectStrip({ lang }: { lang: Lang }) {
+function ProjectGallery({ lang }: { lang: Lang }) {
   const projects = getFeaturedDemoProjects();
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-[#fbfaf8] py-16">
       <div className="container-page">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div className="max-w-3xl">
-            <p className="eyebrow">Live Demo Projects</p>
+            <p className="eyebrow">Project discovery</p>
             <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-5xl">
+              {pickLang(lang, "먼저 프로젝트를 보고 판단합니다.", "Start with projects, then decide.")}
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "첫 화면의 판단은 실제 프로젝트 카드로 이어져야 합니다.",
-                "The front page should lead directly into real project cards.",
+                "각 카드는 필요한 지원, 검증 상태, 월간 업데이트, 보고서 근거로 이어집니다.",
+                "Each card leads to requested support, verification status, monthly updates, and reporting evidence.",
               )}
-            </h2>
+            </p>
           </div>
-          <CtaLink href="/projects" variant="secondary">
-            {pickLang(lang, "전체 프로젝트", "All projects")}
-            <ArrowRight size={16} />
-          </CtaLink>
+          <PrimaryLink href="/projects" tone="outline">
+            {pickLang(lang, "프로젝트 전체 보기", "Browse projects")}
+          </PrimaryLink>
         </div>
+
         <div className="mt-8 grid gap-5 lg:grid-cols-3">
           {projects.map((project) => (
             <Link
               key={project.id}
               href={`/projects/${project.slug}`}
-              className="group overflow-hidden border border-[var(--line)] bg-white"
+              className="group overflow-hidden rounded-lg border border-[var(--line)] bg-white transition hover:-translate-y-1 hover:shadow-[0_18px_60px_rgba(32,26,32,0.12)]"
             >
-              <div className="aspect-[16/10] overflow-hidden bg-[#e7edf4]">
+              <div className="aspect-[16/10] overflow-hidden bg-[#ece7df]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={project.imageUrl}
@@ -337,79 +346,106 @@ function FeaturedProjectStrip({ lang }: { lang: Lang }) {
 export function FrontFirstHome({ lang }: { lang: Lang }) {
   return (
     <>
-      <section className="border-b border-[var(--line)] bg-[#f4f7f5]">
-        <div className="container-page grid min-h-[calc(100vh-68px)] gap-8 py-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+      <section className="bg-[var(--background)]">
+        <div className="container-page grid min-h-[calc(100vh-68px)] gap-10 py-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
           <div>
             <p className="eyebrow">Value-to-Impact Desk</p>
             <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-6xl">
               {pickLang(
                 lang,
-                "좋은 프로젝트를 기업이 검토할 수 있는 증거와 보고서로 바꿉니다.",
-                "Turn good projects into evidence and reports companies can review.",
+                "지원할 프로젝트를 찾고, 보고할 변화를 정리하세요.",
+                "Find projects to support, then track what changed.",
               )}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "후원·구매·투자 후보를 발견하고, 검증 상태와 월간 성과를 따라가며, CSR팀이 바로 쓸 수 있는 출력물까지 연결하는 프론트 데스크입니다.",
-                "A front desk for discovering giving, procurement, and investment candidates, tracking verification and monthly results, then producing CSR-ready outputs.",
+                "기업은 검토할 프로젝트와 리포트를 확인하고, 비영리·사회적기업은 조직 프로필과 월간보고를 제출합니다.",
+                "Companies review projects and reports. Organizations submit profiles and monthly updates.",
               )}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <CtaLink href="/projects">
-                <Search size={16} />
-                {pickLang(lang, "프로젝트 탐색", "Explore projects")}
-              </CtaLink>
-              <CtaLink href="/dashboard/company" variant="secondary">
-                <Layers3 size={16} />
-                {pickLang(lang, "기업 데스크 보기", "Open company desk")}
-              </CtaLink>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <UserPathCard
+                icon={BriefcaseBusiness}
+                title={pickLang(lang, "기업·후원자", "Companies and donors")}
+                body={pickLang(
+                  lang,
+                  "지원 후보를 비교하고, 구매·후원·CSR 보고에 필요한 근거를 확인합니다.",
+                  "Compare candidates and review evidence for procurement, giving, and CSR reporting.",
+                )}
+                tasks={companyTasks}
+                href="/projects"
+                cta={pickLang(lang, "프로젝트 찾기", "Find projects")}
+                dark
+              />
+              <UserPathCard
+                icon={Building2}
+                title={pickLang(lang, "비영리·사회적기업", "Organizations")}
+                body={pickLang(
+                  lang,
+                  "우리 조직의 활동과 증빙을 등록하고, 기업과 후원자가 읽을 수 있게 정리합니다.",
+                  "Register your work and evidence so companies and donors can review it.",
+                )}
+                tasks={organizationTasks}
+                href="/apply"
+                cta={pickLang(lang, "조직 등록", "Register organization")}
+              />
             </div>
-            <p className="mt-5 text-sm leading-6 text-[var(--muted)]">
-              {pickLang(
-                lang,
-                "현재 프론트는 Supabase 없이 데모 데이터로 작동합니다. 데이터베이스가 아니라 판단 흐름을 먼저 보여줍니다.",
-                "This front runs on demo data without Supabase. It shows the decision flow before adding a database.",
-              )}
-            </p>
           </div>
-          <DeskPreview lang={lang} />
+
+          <HomeWorkspace lang={lang} />
         </div>
       </section>
 
-      <section className="border-b border-[var(--line)] bg-[#fff8eb] py-14">
-        <div className="container-page grid gap-5 md:grid-cols-4">
-          {pipeline.map((step, index) => (
-            <PipelineStep key={step.labelEn} step={step} index={index} lang={lang} />
+      <section className="border-y border-[var(--line)] bg-white py-12">
+        <div className="container-page grid gap-4 md:grid-cols-4">
+          {workflow.map((item, index) => (
+            <WorkflowCard key={item.titleEn} item={item} index={index} lang={lang} />
           ))}
         </div>
       </section>
 
-      <section className="bg-[#eef4fb] py-16">
-        <div className="container-page grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <section className="bg-[#f4eef9] py-16">
+        <div className="container-page grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
-            <p className="eyebrow">Operating Context</p>
+            <p className="eyebrow">For companies</p>
             <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-5xl">
-              {pickLang(
-                lang,
-                "Value는 의도에서 시작하지만 Impact는 증거와 시간으로 남아야 합니다.",
-                "Value starts with intent. Impact has to remain as evidence over time.",
-              )}
+              {pickLang(lang, "사회공헌과 기업구매 후보를 한 화면에서 비교합니다.", "Compare giving and procurement candidates in one place.")}
             </h2>
             <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "이 화면의 목적은 예쁜 소개가 아니라 다음 행동을 분명하게 만드는 것입니다. 어떤 프로젝트를 볼지, 어떤 근거가 부족한지, 어떤 리포트를 출력할지 바로 판단하게 합니다.",
-                "This screen is not a brochure. It makes the next decision obvious: which project to inspect, what evidence is missing, and which report can be produced.",
+                "검증 상태, 필요한 지원, 최신 보고, 다운로드 가능한 브리프를 기준으로 다음 파트너를 고릅니다.",
+                "Choose the next partner by verification status, requested support, latest updates, and downloadable briefs.",
               )}
             </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <PrimaryLink href="/dashboard/company">
+                <FolderCheck size={16} />
+                {pickLang(lang, "기업 대시보드", "Company dashboard")}
+              </PrimaryLink>
+              <PrimaryLink href="/projects/compare" tone="outline">
+                <BarChart3 size={16} />
+                {pickLang(lang, "프로젝트 비교", "Compare projects")}
+              </PrimaryLink>
+            </div>
           </div>
-          <div className="grid gap-3">
-            {verificationRows.map(([level, ko, evidence]) => (
-              <div key={level} className="grid gap-3 border border-[var(--line)] bg-white p-4 md:grid-cols-[0.55fr_0.7fr_1fr]">
-                <p className="font-semibold text-[var(--ink)]">{level}</p>
-                <p className="text-sm font-semibold text-[var(--accent)]">{ko}</p>
-                <p className="text-sm leading-6 text-[var(--muted)]">{evidence}</p>
+
+          <div className="grid gap-3 rounded-lg border border-[#d7c7e5] bg-white p-5">
+            {[
+              ["Candidate shortlist", "3 projects", "장애인 고용 · 홈리스 자립 · ESG 구매"],
+              ["Open requests", "2 needs", "조직 제출자료 · 월간 성과 확인"],
+              ["Ready exports", "4 files", "CSR evidence pack · Board one-page brief"],
+            ].map(([title, value, body]) => (
+              <div key={title} className="rounded-md border border-[var(--line)] bg-[#fbfaf8] p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="font-semibold">{title}</p>
+                  <p className="rounded-md bg-[var(--accent)] px-2 py-1 text-xs font-semibold text-white">
+                    {value}
+                  </p>
+                </div>
+                <p className="mt-2 text-sm text-[var(--muted)]">{body}</p>
               </div>
             ))}
           </div>
@@ -417,55 +453,73 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
       </section>
 
       <section className="bg-white py-16">
-        <div className="container-page">
-          <div className="max-w-3xl">
-            <p className="eyebrow">Role Workflows</p>
+        <div className="container-page grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="order-2 rounded-lg border border-[var(--line)] bg-[#fbfaf8] p-5 lg:order-1">
+            {[
+              { icon: UploadCloud, title: "이번 달 활동", body: "교육 3회, 기업 납품 2건, 참여자 변화 기록" },
+              { icon: FileText, title: "증빙자료", body: "사진, 영수증, 공식 링크, 익명화된 참여자 이야기" },
+              { icon: Handshake, title: "기업 문의", body: "구매 가능 수량, 캠페인 일정, 담당자 연결 요청" },
+            ].map(({ icon: Icon, title, body }) => (
+              <div key={title} className="mb-3 rounded-md bg-white p-4 last:mb-0">
+                <div className="flex items-center gap-3">
+                  <Icon size={20} className="text-[var(--accent)]" />
+                  <p className="font-semibold">{title}</p>
+                </div>
+                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <p className="eyebrow">For organizations</p>
             <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-5xl">
+              {pickLang(lang, "반복되는 설명을 프로필과 월간보고로 줄입니다.", "Turn repeated explanations into a profile and monthly report.")}
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "한 장의 홍보 페이지가 아니라 세 역할이 같은 기록을 보는 구조입니다.",
-                "Not a promo page: three roles work from the same impact record.",
+                "활동, 지출, 고용, 제품 판매, 다음 계획을 같은 구조로 올리면 기업과 후원자가 읽을 수 있는 자료가 됩니다.",
+                "Submit activities, spending, jobs, product sales, and next plans in one structure companies and donors can read.",
               )}
-            </h2>
-          </div>
-          <div className="mt-8 grid gap-5 lg:grid-cols-3">
-            {roleCards.map((card) => (
-              <RoleCard key={card.titleEn} card={card} lang={lang} />
-            ))}
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <PrimaryLink href="/apply">
+                <Building2 size={16} />
+                {pickLang(lang, "조직 프로필 시작", "Start profile")}
+              </PrimaryLink>
+              <PrimaryLink href="/org/monthly-report" tone="outline">
+                <ClipboardList size={16} />
+                {pickLang(lang, "월간보고 작성", "Submit monthly report")}
+              </PrimaryLink>
+            </div>
           </div>
         </div>
       </section>
 
-      <FeaturedProjectStrip lang={lang} />
+      <ProjectGallery lang={lang} />
 
-      <section className="dark-section py-16">
-        <div className="container-page grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-center">
+      <section className="bg-[var(--ink)] py-16 text-white">
+        <div className="container-page grid gap-8 lg:grid-cols-[1fr_0.75fr] lg:items-center">
           <div>
-            <p className="eyebrow text-[#8be0bf]">Release Ready</p>
+            <p className="eyebrow text-[#ffbd8f]">Get started</p>
             <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-5xl">
-              {pickLang(
-                lang,
-                "후원 이후의 변화까지 읽히는 자료로 남겨야 합니다.",
-                "After support, change still has to be readable.",
-              )}
+              {pickLang(lang, "오늘은 하나만 시작하면 됩니다.", "Start with one action today.")}
             </h2>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-white/72">
               {pickLang(
                 lang,
-                "프로젝트 카드에서 끝나지 않고 월간보고, 증빙 상태, 다운로드 가능한 리포트까지 이어지는 전면 화면으로 다시 만들었습니다.",
-                "The front now continues from project card to monthly update, evidence status, and downloadable reporting.",
+                "기업은 프로젝트를 고르고, 비영리는 조직 프로필을 등록하세요. 그 다음 보고와 증빙은 같은 Desk에서 이어집니다.",
+                "Companies can choose a project. Organizations can register a profile. Updates and evidence continue in the same Desk.",
               )}
             </p>
           </div>
           <div className="flex flex-wrap gap-3 lg:justify-end">
-            <CtaLink href="/apply" variant="light">
-              <ClipboardCheck size={16} />
-              {pickLang(lang, "프로젝트 등록", "Register project")}
-            </CtaLink>
-            <CtaLink href="/sample-report" variant="light">
-              <FileText size={16} />
-              {pickLang(lang, "샘플 리포트", "Sample report")}
-            </CtaLink>
+            <PrimaryLink href="/projects" tone="light">
+              {pickLang(lang, "프로젝트 찾기", "Find projects")}
+            </PrimaryLink>
+            <PrimaryLink href="/apply" tone="light">
+              {pickLang(lang, "조직 등록", "Register organization")}
+            </PrimaryLink>
           </div>
         </div>
       </section>

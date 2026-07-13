@@ -93,7 +93,7 @@ export function IntakeForm() {
           <input className="field" type="file" multiple />
         </FieldLabel>
       </div>
-      <div className="grid gap-3 rounded-md bg-[#f7f8f4] p-4 text-sm">
+      <div className="grid gap-3 rounded-md bg-[#fbfaf8] p-4 text-sm">
         {[
           "서비스 이용약관과 개인정보 수집/이용에 동의합니다. (필수)",
           "제출자료가 플랫폼 내 리포트 생성과 관리자 검토에 활용되는 것에 동의합니다. (필수)",

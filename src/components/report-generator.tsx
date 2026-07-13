@@ -65,7 +65,7 @@ export function ReportGenerator() {
           )}
         </button>
       </div>
-      <pre className="mt-5 min-h-56 whitespace-pre-wrap rounded-md border border-[var(--line)] bg-[#f7f8f4] p-4 text-sm leading-6">
+      <pre className="mt-5 min-h-56 whitespace-pre-wrap rounded-md border border-[var(--line)] bg-[#fbfaf8] p-4 text-sm leading-6">
         {output ||
           `Sample Output Preview\n\n1. Impact Summary\n- Organization: Bloom Paper Art Collective\n- Verification: Level 2 - Evidence Submitted\n- Source fields: employmentTotal, monthlyUpdates, evidence\n\n2. Important Notice\nAI does not verify claims. Verification level is assigned only by Admin/Reviewer.`}
       </pre>
