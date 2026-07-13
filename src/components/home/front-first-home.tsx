@@ -21,10 +21,11 @@ import { pickLang } from "@/lib/i18n";
 const companyTasks = ["지원 프로젝트 비교", "검증 상태 확인", "월간 변화 추적", "CSR 보고서 다운로드"];
 const organizationTasks = ["조직 프로필 등록", "활동 보고 제출", "증빙자료 업로드", "기업 문의 확인"];
 
-const impactRows = [
-  ["지원 현황", "3개 프로젝트", "후원·구매·협력 후보를 한 포트폴리오에서 봅니다."],
-  ["최근 변화", "7월 업데이트", "활동, 지출, 참여자 변화, 다음 계획을 월별로 비교합니다."],
-  ["보고 준비", "4개 파일", "연말 CSR 보고서에 넣을 수 있는 근거 묶음을 내려받습니다."],
+const chartBars: Array<[string, number]> = [
+  ["고용·참여", 82],
+  ["활동 증빙", 74],
+  ["예산 보고", 68],
+  ["CSR 준비", 86],
 ];
 
 function ActionLink({
@@ -114,6 +115,66 @@ function UserPathCard({
   );
 }
 
+function DashboardChartPreview({ dark = false }: { dark?: boolean }) {
+  const linePoints = "0,92 44,78 88,82 132,55 176,46 220,28 264,34";
+  const baseClass = dark
+    ? "border-white/12 bg-white/8 text-white"
+    : "border-[var(--line)] bg-white text-[var(--foreground)]";
+
+  return (
+    <div className={`rounded-lg border p-5 ${baseClass}`}>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className={`text-xs font-semibold uppercase ${dark ? "text-[#ffbd8f]" : "text-[var(--accent)]"}`}>
+            Dashboard preview
+          </p>
+          <h3 className="korean-copy mt-2 text-xl font-semibold leading-7">
+            후원 포트폴리오 임팩트 추이
+          </h3>
+        </div>
+        <span className={`rounded-md px-3 py-2 text-xs font-semibold ${dark ? "bg-white text-[var(--ink)]" : "bg-[var(--accent)] text-white"}`}>
+          86%
+        </span>
+      </div>
+
+      <svg viewBox="0 0 264 110" className="mt-5 h-36 w-full" role="img" aria-label="Impact dashboard trend chart">
+        {[22, 48, 74, 100].map((y) => (
+          <line key={y} x1="0" x2="264" y1={y} y2={y} stroke={dark ? "rgba(255,255,255,.16)" : "#e6ded4"} />
+        ))}
+        <polyline
+          points={linePoints}
+          fill="none"
+          stroke={dark ? "#ffbd8f" : "var(--accent)"}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="5"
+        />
+        {linePoints.split(" ").map((point) => {
+          const [cx, cy] = point.split(",");
+          return <circle key={point} cx={cx} cy={cy} r="4" fill={dark ? "white" : "var(--ink)"} />;
+        })}
+      </svg>
+
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        {chartBars.map(([label, value]) => (
+          <div key={label} className={`rounded-md p-3 ${dark ? "bg-white/8" : "bg-[#fbfaf8]"}`}>
+            <div className="flex items-center justify-between gap-2 text-sm">
+              <span className="font-semibold">{label}</span>
+              <span className={dark ? "text-white/70" : "text-[var(--muted)]"}>{value}%</span>
+            </div>
+            <div className={`mt-2 h-2 overflow-hidden rounded-full ${dark ? "bg-white/12" : "bg-[#ebe4dc]"}`}>
+              <div
+                className="h-full rounded-full"
+                style={{ width: `${value}%`, backgroundColor: dark ? "#ffbd8f" : "var(--accent)" }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function HomeWorkspace({ lang }: { lang: Lang }) {
   const [first, second] = getFeaturedDemoProjects();
 
@@ -184,16 +245,8 @@ function HomeWorkspace({ lang }: { lang: Lang }) {
               <TrendingUp size={18} className="text-[var(--accent)]" />
               <h3 className="font-semibold">{pickLang(lang, "Tracing Impact", "Tracing Impact")}</h3>
             </div>
-            <div className="mt-4 grid gap-3">
-              {impactRows.map(([label, value, body]) => (
-                <div key={label} className="rounded-md bg-[#f6f2ed] px-3 py-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm font-semibold">{label}</span>
-                    <span className="text-xs font-semibold text-[var(--accent)]">{value}</span>
-                  </div>
-                  <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{body}</p>
-                </div>
-              ))}
+            <div className="mt-4">
+              <DashboardChartPreview />
             </div>
           </div>
 
@@ -291,17 +344,21 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
           <div>
             <p className="eyebrow">Social impact, made accountable</p>
             <h1 className="korean-copy mt-4 text-4xl font-semibold leading-tight md:text-6xl">
-              {pickLang(
-                lang,
-                "좋은 지원이 실제 변화로 이어졌는지 확인하세요.",
-                "See whether good support became real change.",
+              {lang === "ko" ? (
+                <>
+                  <span className="block">기업의 후원이 실제 </span>
+                  <span className="block">변화로 이어졌는지 </span>
+                  <span className="block">확인하세요.</span>
+                </>
+              ) : (
+                "See whether corporate support became real change."
               )}
             </h1>
             <p className="korean-copy mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "기업은 지원한 프로젝트의 변화를 한눈에 보고, 비영리와 사회적기업은 활동을 보고서로 정리해 신뢰를 만듭니다.",
-                "Companies track what changed after support. Organizations turn their work into reports that build trust.",
+                "기업의 후원으로 발생한 소셜 임팩트를 투명하게 공개합니다. #Impact Tracing Map",
+                "We make the social impact created by corporate support transparent. #Impact Tracing Map",
               )}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -328,7 +385,7 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
                 "Track the projects you support and download files for internal reporting.",
               )}
               tasks={companyTasks}
-              href="/dashboard"
+              href="/login"
               cta={pickLang(lang, "임팩트 관리하기", "Manage impact")}
               dark
             />
@@ -374,18 +431,20 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
             </div>
           </div>
 
-          <div className="grid gap-3 rounded-lg border border-[#d7c7e5] bg-white p-5">
-            {impactRows.map(([title, value, body]) => (
-              <div key={title} className="rounded-md border border-[var(--line)] bg-[#fbfaf8] p-4">
-                <div className="flex items-center justify-between gap-4">
-                  <p className="font-semibold">{title}</p>
-                  <p className="rounded-md bg-[var(--accent)] px-2 py-1 text-xs font-semibold text-white">
-                    {value}
-                  </p>
+          <div className="rounded-lg border border-[#d7c7e5] bg-[#2f2338] p-5 shadow-[0_24px_80px_rgba(32,26,32,0.16)]">
+            <DashboardChartPreview dark />
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {[
+                ["지원 프로젝트", "9개"],
+                ["평균 증빙 준비", "78%"],
+                ["보고서 상태", "다운로드 가능"],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-md bg-white/8 p-3 text-white">
+                  <p className="text-xs text-white/60">{label}</p>
+                  <p className="mt-2 text-lg font-semibold">{value}</p>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{body}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -441,7 +500,11 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
           <div>
             <p className="eyebrow text-[#ffbd8f]">Social Impact Tracing Map</p>
             <h2 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-5xl">
-              {pickLang(lang, "한국의 작은 비영리 프로젝트를 기업과 연결합니다.", "Connecting Korea's local nonprofit projects with companies.")}
+              {pickLang(
+                lang,
+                "한국의 비영리 프로젝트를 '가치 중심의 글로벌 기업'과 연결합니다.",
+                "Connecting Korean nonprofit projects with value-led global companies.",
+              )}
             </h2>
             <p className="korean-copy mt-5 max-w-3xl text-lg leading-8 text-white/74">
               {pickLang(
