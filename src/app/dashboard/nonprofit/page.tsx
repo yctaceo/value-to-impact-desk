@@ -38,7 +38,7 @@ export default function NonprofitDashboardPage() {
             </div>
             <div className="mt-5 grid gap-4 md:grid-cols-4">
               {["Problem", "Activities", "Budget", "Outcomes"].map((step, index) => (
-                <div key={step} className="rounded-md bg-[#f7f8f4] p-4">
+                <div key={step} className="rounded-md bg-[#fbfaf8] p-4">
                   <p className="text-xs font-semibold text-[var(--muted)]">Step {index + 1}</p>
                   <p className="mt-2 font-semibold">{step}</p>
                   <p className="mt-2 text-sm text-[var(--muted)]">Demo draft saved</p>
@@ -59,7 +59,7 @@ export default function NonprofitDashboardPage() {
                   "What money was spent and what evidence supports it?",
                   "What is the next month plan?",
                 ].map((item) => (
-                  <p key={item} className="rounded-md bg-[#f7f8f4] p-3">{item}</p>
+                  <p key={item} className="rounded-md bg-[#fbfaf8] p-3">{item}</p>
                 ))}
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function NonprofitDashboardPage() {
             </div>
             <div className="mt-5 grid gap-3 md:grid-cols-3">
               {["Activity photos", "Receipts", "Participant consent"].map((item) => (
-                <div key={item} className="rounded-md bg-[#f7f8f4] p-4">
+                <div key={item} className="rounded-md bg-[#fbfaf8] p-4">
                   <p className="font-semibold">{item}</p>
                   <p className="mt-2 text-sm text-[var(--muted)]">Supabase Storage integration point</p>
                   <DemoActionButton label="Demo upload" doneLabel="Queued" />
@@ -88,7 +88,7 @@ export default function NonprofitDashboardPage() {
             </div>
             <div className="mt-5 grid gap-3">
               {["CSR team requested June impact summary.", "Procurement team asked for gift catalogue.", "Foundation asked for anonymized participant story."].map((item) => (
-                <div key={item} className="flex flex-col justify-between gap-3 rounded-md bg-[#f7f8f4] p-4 md:flex-row md:items-center">
+                <div key={item} className="flex flex-col justify-between gap-3 rounded-md bg-[#fbfaf8] p-4 md:flex-row md:items-center">
                   <p className="text-sm text-[var(--muted)]">{item}</p>
                   <DemoActionButton label="Reply" doneLabel="Reply drafted" />
                 </div>

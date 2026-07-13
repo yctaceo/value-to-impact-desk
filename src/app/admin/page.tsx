@@ -54,7 +54,7 @@ export default function AdminPage() {
                 <Link
                   key={profile.id}
                   href={`/profiles/${profile.slug}`}
-                  className="grid gap-4 p-5 hover:bg-[#f7f8f4] md:grid-cols-[1.2fr_0.8fr_0.8fr_0.6fr]"
+                  className="grid gap-4 p-5 hover:bg-[#fbfaf8] md:grid-cols-[1.2fr_0.8fr_0.8fr_0.6fr]"
                 >
                   <div>
                     <p className="font-semibold">{profile.nameKo}</p>

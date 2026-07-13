@@ -122,7 +122,7 @@ export default async function ProjectDetailPage({
               {section.list ? (
                 <ul className="mt-5 grid gap-3 text-sm leading-6 text-[var(--muted)] md:grid-cols-2">
                   {section.list.map((item) => (
-                    <li key={item} className="rounded-md bg-[#f7f8f4] p-3">
+                    <li key={item} className="rounded-md bg-[#fbfaf8] p-3">
                       {item}
                     </li>
                   ))}
@@ -135,7 +135,7 @@ export default async function ProjectDetailPage({
             <h2 className="text-2xl font-semibold">Budget</h2>
             <div className="mt-5 grid gap-3 md:grid-cols-3">
               {project.budget.map((item) => (
-                <div key={item.labelKo} className="rounded-md bg-[#f7f8f4] p-4">
+                <div key={item.labelKo} className="rounded-md bg-[#fbfaf8] p-4">
                   <p className="text-sm text-[var(--muted)]">
                     {pickLang(lang, item.labelKo, item.labelEn)}
                   </p>
@@ -153,7 +153,7 @@ export default async function ProjectDetailPage({
               <p className="leading-7 text-[var(--muted)]">
                 {pickLang(lang, project.organization.missionKo, project.organization.missionEn)}
               </p>
-              <div className="rounded-md bg-[#f7f8f4] p-4 text-sm leading-7 text-[var(--muted)]">
+              <div className="rounded-md bg-[#fbfaf8] p-4 text-sm leading-7 text-[var(--muted)]">
                 <p>Legal type: {project.organization.legalType}</p>
                 <p>Founded: {project.organization.founded}</p>
                 {project.organization.website ? (

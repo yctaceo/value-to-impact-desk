@@ -69,7 +69,7 @@ export function ProjectDiscoveryWall({ profiles }: { profiles: ImpactProfile[] }
 
   return (
     <div>
-      <div className="sticky top-16 z-20 border-b border-[var(--line)] bg-[#f7f8f4]/94 py-4 backdrop-blur">
+      <div className="sticky top-16 z-20 border-b border-[var(--line)] bg-[#fbfaf8]/94 py-4 backdrop-blur">
         <div className="container-page">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative flex-1">

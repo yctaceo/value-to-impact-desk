@@ -82,7 +82,7 @@ export function MonthlyReportForm() {
           <input className="field" type="file" multiple />
         </FieldLabel>
       </div>
-      <label className="flex items-start gap-3 rounded-md bg-[#f7f8f4] p-4 text-sm">
+      <label className="flex items-start gap-3 rounded-md bg-[#fbfaf8] p-4 text-sm">
         <input type="checkbox" required className="mt-1 h-4 w-4 accent-[var(--accent)]" />
         <span>
           제출 자료가 월간 리포트 생성, 관리자 검토, 승인된 이해관계자 공유에

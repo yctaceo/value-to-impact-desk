@@ -52,7 +52,7 @@ export default async function ComparePage({
                   ["Source", (project: (typeof projects)[number]) => project.sourceLabel],
                 ].map(([label, getter]) => (
                   <tr key={label as string}>
-                    <td className="border-b border-[var(--line)] bg-[#f7f8f4] p-4 font-semibold">
+                    <td className="border-b border-[var(--line)] bg-[#fbfaf8] p-4 font-semibold">
                       {label as string}
                     </td>
                     {projects.map((project) => (

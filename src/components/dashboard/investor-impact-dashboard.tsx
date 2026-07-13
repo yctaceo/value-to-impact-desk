@@ -1,0 +1,556 @@
+import Link from "next/link";
+import {
+  ArrowRight,
+  Download,
+  FileDown,
+  LineChart,
+  PieChart,
+  ShieldCheck,
+  TrendingUp,
+} from "lucide-react";
+import type { ProjectDetail } from "@/types/project";
+
+type ImpactRecord = {
+  slug: string;
+  label: string;
+  supportType: string;
+  supportAmount: number;
+  reportReady: number;
+  metrics: {
+    primary: string;
+    primaryValue: string;
+    secondary: string;
+    secondaryValue: string;
+    reach: number;
+    evidence: number;
+    budgetUse: number;
+    monthScore: number;
+  };
+  series: number[];
+  allocation: { label: string; value: number; color: string }[];
+};
+
+const impactRecords: ImpactRecord[] = [
+  {
+    slug: "bear-better-inclusive-work",
+    label: "Inclusive procurement",
+    supportType: "기업구매 검토",
+    supportAmount: 18500000,
+    reportReady: 82,
+    metrics: {
+      primary: "고용 유지",
+      primaryValue: "24명",
+      secondary: "기업 파트너십",
+      secondaryValue: "6건",
+      reach: 72,
+      evidence: 84,
+      budgetUse: 64,
+      monthScore: 88,
+    },
+    series: [42, 48, 55, 61, 70, 78, 82],
+    allocation: [
+      { label: "직무 코칭", value: 40, color: "#5b45d6" },
+      { label: "운영", value: 36, color: "#c96f3b" },
+      { label: "보고", value: 24, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "big-issue-korea-housing-income",
+    label: "Donor program",
+    supportType: "후원·캠페인",
+    supportAmount: 22400000,
+    reportReady: 74,
+    metrics: {
+      primary: "판매원 참여",
+      primaryValue: "38명",
+      secondary: "정기구독",
+      secondaryValue: "410건",
+      reach: 68,
+      evidence: 72,
+      budgetUse: 58,
+      monthScore: 79,
+    },
+    series: [35, 44, 47, 52, 64, 69, 74],
+    allocation: [
+      { label: "판매원 지원", value: 44, color: "#5b45d6" },
+      { label: "캠페인", value: 34, color: "#c96f3b" },
+      { label: "보고", value: 22, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "donggubat-inclusive-esg-products",
+    label: "ESG gift pipeline",
+    supportType: "ESG 구매 후보",
+    supportAmount: 13200000,
+    reportReady: 69,
+    metrics: {
+      primary: "제품 구매",
+      primaryValue: "1,260개",
+      secondary: "고용 연결",
+      secondaryValue: "14명",
+      reach: 61,
+      evidence: 69,
+      budgetUse: 55,
+      monthScore: 73,
+    },
+    series: [28, 35, 41, 47, 54, 62, 69],
+    allocation: [
+      { label: "생산", value: 48, color: "#5b45d6" },
+      { label: "고용·훈련", value: 30, color: "#c96f3b" },
+      { label: "캠페인", value: 22, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "jump-education-mentoring",
+    label: "Education mentoring",
+    supportType: "임직원 멘토링",
+    supportAmount: 27600000,
+    reportReady: 77,
+    metrics: {
+      primary: "멘토링 회기",
+      primaryValue: "96회",
+      secondary: "청소년 참여",
+      secondaryValue: "128명",
+      reach: 76,
+      evidence: 78,
+      budgetUse: 62,
+      monthScore: 81,
+    },
+    series: [32, 39, 50, 56, 63, 71, 77],
+    allocation: [
+      { label: "멘토 교육", value: 38, color: "#5b45d6" },
+      { label: "청소년 프로그램", value: 37, color: "#c96f3b" },
+      { label: "측정", value: 25, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "beautiful-store-circular-sharing",
+    label: "Circular campaign",
+    supportType: "임직원 물품기부",
+    supportAmount: 34800000,
+    reportReady: 86,
+    metrics: {
+      primary: "기부 물품",
+      primaryValue: "7,420점",
+      secondary: "참여 임직원",
+      secondaryValue: "312명",
+      reach: 84,
+      evidence: 88,
+      budgetUse: 71,
+      monthScore: 86,
+    },
+    series: [44, 52, 61, 67, 75, 81, 86],
+    allocation: [
+      { label: "수거·분류", value: 42, color: "#5b45d6" },
+      { label: "캠페인", value: 32, color: "#c96f3b" },
+      { label: "공익 배분", value: 26, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "merryyear-self-reliance",
+    label: "Self-reliance",
+    supportType: "자립지원 후원",
+    supportAmount: 41200000,
+    reportReady: 73,
+    metrics: {
+      primary: "교육 수료",
+      primaryValue: "64명",
+      secondary: "창업 준비",
+      secondaryValue: "18팀",
+      reach: 70,
+      evidence: 75,
+      budgetUse: 67,
+      monthScore: 78,
+    },
+    series: [30, 36, 45, 53, 58, 66, 73],
+    allocation: [
+      { label: "교육·멘토링", value: 43, color: "#5b45d6" },
+      { label: "초기 실행지원", value: 38, color: "#c96f3b" },
+      { label: "성과관리", value: 19, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "purme-child-rehabilitation",
+    label: "Rehabilitation",
+    supportType: "치료비 후원",
+    supportAmount: 53600000,
+    reportReady: 80,
+    metrics: {
+      primary: "치료 회기",
+      primaryValue: "214회",
+      secondary: "아동 지원",
+      secondaryValue: "47명",
+      reach: 79,
+      evidence: 83,
+      budgetUse: 73,
+      monthScore: 84,
+    },
+    series: [37, 45, 52, 60, 68, 74, 80],
+    allocation: [
+      { label: "재활치료", value: 60, color: "#5b45d6" },
+      { label: "가족지원", value: 25, color: "#c96f3b" },
+      { label: "보고", value: 15, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "goodneighbors-crisis-child-support",
+    label: "Child protection",
+    supportType: "위기가정 긴급지원",
+    supportAmount: 68200000,
+    reportReady: 71,
+    metrics: {
+      primary: "아동 지원",
+      primaryValue: "156명",
+      secondary: "사례관리",
+      secondaryValue: "89건",
+      reach: 73,
+      evidence: 70,
+      budgetUse: 69,
+      monthScore: 76,
+    },
+    series: [29, 34, 43, 49, 57, 65, 71],
+    allocation: [
+      { label: "긴급지원", value: 54, color: "#5b45d6" },
+      { label: "사례관리", value: 29, color: "#c96f3b" },
+      { label: "보고", value: 17, color: "#2f2338" },
+    ],
+  },
+  {
+    slug: "habitat-korea-housing-recovery",
+    label: "Housing recovery",
+    supportType: "주거환경 개선",
+    supportAmount: 49100000,
+    reportReady: 78,
+    metrics: {
+      primary: "개선 가구",
+      primaryValue: "23가구",
+      secondary: "봉사 참여",
+      secondaryValue: "184시간",
+      reach: 75,
+      evidence: 81,
+      budgetUse: 70,
+      monthScore: 82,
+    },
+    series: [33, 41, 46, 58, 64, 72, 78],
+    allocation: [
+      { label: "자재·시공", value: 64, color: "#5b45d6" },
+      { label: "봉사 운영", value: 23, color: "#c96f3b" },
+      { label: "측정", value: 13, color: "#2f2338" },
+    ],
+  },
+];
+
+function formatKrw(value: number) {
+  return `${Math.round(value / 10000).toLocaleString("ko-KR")}만원`;
+}
+
+function BarMeter({ label, value }: { label: string; value: number }) {
+  return (
+    <div>
+      <div className="flex items-center justify-between gap-3 text-sm">
+        <span className="font-semibold">{label}</span>
+        <span className="text-[var(--muted)]">{value}%</span>
+      </div>
+      <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#ebe4dc]">
+        <div className="h-full rounded-full bg-[var(--accent)]" style={{ width: `${value}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function MiniTrend({ values }: { values: number[] }) {
+  const points = values
+    .map((value, index) => {
+      const x = (index / (values.length - 1)) * 260;
+      const y = 92 - (value / 100) * 76;
+      return `${x},${y}`;
+    })
+    .join(" ");
+
+  return (
+    <svg viewBox="0 0 260 100" className="h-32 w-full" role="img" aria-label="Monthly impact trend">
+      <defs>
+        <linearGradient id="impactTrend" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0%" stopColor="#5b45d6" />
+          <stop offset="100%" stopColor="#c96f3b" />
+        </linearGradient>
+      </defs>
+      {[20, 40, 60, 80].map((y) => (
+        <line key={y} x1="0" x2="260" y1={y} y2={y} stroke="#e6ded4" strokeWidth="1" />
+      ))}
+      <polyline fill="none" points={points} stroke="url(#impactTrend)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
+      {values.map((value, index) => {
+        const x = (index / (values.length - 1)) * 260;
+        const y = 92 - (value / 100) * 76;
+        return <circle key={`${value}-${index}`} cx={x} cy={y} r="4" fill="#201a28" />;
+      })}
+    </svg>
+  );
+}
+
+function Donut({ items }: { items: ImpactRecord["allocation"] }) {
+  const segments = items.reduce<Array<ImpactRecord["allocation"][number] & { offset: number }>>(
+    (acc, item) => {
+      const previous = acc.at(-1);
+      const offset = previous ? previous.offset - previous.value : 25;
+      return [...acc, { ...item, offset }];
+    },
+    [],
+  );
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-[150px_1fr] sm:items-center">
+      <svg viewBox="0 0 42 42" className="h-36 w-36" role="img" aria-label="Budget allocation chart">
+        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#ece6de" strokeWidth="7" />
+        {segments.map((item) => {
+          const dash = `${item.value} ${100 - item.value}`;
+          return (
+            <circle
+              key={item.label}
+              cx="21"
+              cy="21"
+              r="15.915"
+              fill="transparent"
+              stroke={item.color}
+              strokeDasharray={dash}
+              strokeDashoffset={item.offset}
+              strokeWidth="7"
+            />
+          );
+        })}
+      </svg>
+      <div className="grid gap-2">
+        {items.map((item) => (
+          <div key={item.label} className="flex items-center justify-between gap-3 rounded-md bg-[#fbfaf8] px-3 py-2 text-sm">
+            <span className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
+              {item.label}
+            </span>
+            <span className="font-semibold">{item.value}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function escapePdfText(value: string) {
+  return value.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
+}
+
+function buildPdf(record: ImpactRecord, project: ProjectDetail) {
+  const lines = [
+    "Value-to-Impact Desk CSR Impact Brief",
+    `Organization: ${project.organizationEn}`,
+    `Project: ${project.titleEn}`,
+    `Support type: ${record.supportType}`,
+    `Committed support: KRW ${record.supportAmount.toLocaleString("en-US")}`,
+    `Primary metric: ${record.metrics.primaryValue}`,
+    `Secondary metric: ${record.metrics.secondaryValue}`,
+    `Evidence readiness: ${record.metrics.evidence}%`,
+    `Monthly impact score: ${record.metrics.monthScore}%`,
+    "Note: Demo PDF generated from front-end sample data.",
+  ];
+  const content = [
+    "BT",
+    "/F1 18 Tf",
+    "56 780 Td",
+    `(${escapePdfText(lines[0])}) Tj`,
+    "/F1 11 Tf",
+    ...lines.slice(1).flatMap((line) => ["0 -28 Td", `(${escapePdfText(line)}) Tj`]),
+    "ET",
+  ].join("\n");
+  const objects = [
+    "<< /Type /Catalog /Pages 2 0 R >>",
+    "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+    "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>",
+    "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    `<< /Length ${content.length} >>\nstream\n${content}\nendstream`,
+  ];
+  let pdf = "%PDF-1.4\n";
+  const offsets = [0];
+  objects.forEach((object, index) => {
+    offsets.push(pdf.length);
+    pdf += `${index + 1} 0 obj\n${object}\nendobj\n`;
+  });
+  const xref = pdf.length;
+  pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+  offsets.slice(1).forEach((offset) => {
+    pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+  });
+  pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return pdf;
+}
+
+export function InvestorImpactDashboard({
+  projects,
+  activeSlug = impactRecords[0].slug,
+}: {
+  projects: ProjectDetail[];
+  activeSlug?: string;
+}) {
+  const activeRecord = impactRecords.find((record) => record.slug === activeSlug) ?? impactRecords[0];
+  const activeProject = projects.find((project) => project.slug === activeRecord.slug) ?? projects[0];
+
+  const totals = {
+    support: impactRecords.reduce((sum, item) => sum + item.supportAmount, 0),
+    evidence: Math.round(impactRecords.reduce((sum, item) => sum + item.metrics.evidence, 0) / impactRecords.length),
+  };
+
+  const pdfHref = `data:application/pdf;charset=utf-8,${encodeURIComponent(
+    buildPdf(activeRecord, activeProject),
+  )}`;
+  const pdfFileName = `${activeProject.organizationEn
+    .replace(/\s+/g, "-")
+    .toLowerCase()}-csr-impact-brief.pdf`;
+
+  return (
+    <div className="space-y-6">
+      <section className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <p className="eyebrow">Investor dashboard</p>
+          <h1 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-4xl">
+            내가 지원한 비영리 프로젝트의 변화를 관리합니다.
+          </h1>
+          <p className="mt-3 max-w-3xl leading-7 text-[var(--muted)]">
+            카드를 선택하면 핵심 수치, 그래프, 예산 구성, PDF 보고서가 즉시 바뀝니다.
+          </p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3 lg:w-[520px]">
+          <div className="panel p-3">
+            <p className="text-sm text-[var(--muted)]">지원 포트폴리오</p>
+            <p className="mt-1 text-xl font-semibold">{impactRecords.length}개</p>
+          </div>
+          <div className="panel p-3">
+            <p className="text-sm text-[var(--muted)]">누적 지원</p>
+            <p className="mt-1 text-xl font-semibold">{formatKrw(totals.support)}</p>
+          </div>
+          <div className="panel p-3">
+            <p className="text-sm text-[var(--muted)]">평균 증빙 준비도</p>
+            <p className="mt-1 text-xl font-semibold">{totals.evidence}%</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-5 lg:grid-cols-[300px_1fr]">
+        <aside className="grid h-fit gap-2">
+          <div className="rounded-lg border border-[var(--line)] bg-white p-3">
+            <p className="font-semibold">내가 지원한 비영리기업</p>
+            <p className="mt-1 text-sm leading-5 text-[var(--muted)]">선택한 조직의 데이터로 오른쪽 패널이 바뀝니다.</p>
+          </div>
+          {impactRecords.map((record) => {
+            const project = projects.find((item) => item.slug === record.slug);
+            const selected = record.slug === activeRecord.slug;
+            if (!project) return null;
+            return (
+              <Link
+                key={record.slug}
+                href={`/dashboard?project=${record.slug}`}
+                className={`rounded-lg border p-3 text-left transition ${
+                  selected
+                    ? "border-[var(--accent)] bg-[var(--ink)] text-white shadow-[0_18px_60px_rgba(32,26,32,0.18)]"
+                    : "border-[var(--line)] bg-white hover:border-[var(--accent)]"
+                }`}
+              >
+                <p className={`text-xs font-semibold uppercase ${selected ? "text-[#ffbd8f]" : "text-[var(--accent)]"}`}>
+                  {record.label}
+                </p>
+                <h2 className="korean-copy mt-1 text-base font-semibold leading-6">{project.organizationKo}</h2>
+                <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+                  <span>{record.supportType}</span>
+                  <strong>{formatKrw(record.supportAmount)}</strong>
+                </div>
+              </Link>
+            );
+          })}
+        </aside>
+
+        <div className="grid gap-5">
+          <section className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="rounded-lg border border-[var(--line)] bg-white p-4">
+              <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+                <div>
+                  <p className="text-sm font-semibold text-[var(--accent)]">{activeRecord.supportType}</p>
+                  <h2 className="korean-copy mt-1 text-2xl font-semibold leading-tight">{activeProject.titleKo}</h2>
+                </div>
+                <a
+                  href={pdfHref}
+                  download={pdfFileName}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--ink)] px-4 py-2 text-sm font-semibold text-white"
+                >
+                  <Download size={16} />
+                  CSR 보고서 PDF 다운로드
+                </a>
+              </div>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">{activeRecord.metrics.primary}</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeRecord.metrics.primaryValue}</p>
+                </div>
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">{activeRecord.metrics.secondary}</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeRecord.metrics.secondaryValue}</p>
+                </div>
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">보고서 준비도</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeRecord.reportReady}%</p>
+                </div>
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">최근 업데이트</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeProject.latestUpdate}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-lg border border-[var(--line)] bg-white p-5">
+              <div className="flex items-center gap-2">
+                <LineChart size={20} className="text-[var(--accent)]" />
+                <h3 className="font-semibold">월별 임팩트 추이</h3>
+              </div>
+              <MiniTrend values={activeRecord.series} />
+              <div className="mt-4 grid gap-4">
+                <BarMeter label="참여자·고용 변화" value={activeRecord.metrics.reach} />
+                <BarMeter label="증빙자료 준비도" value={activeRecord.metrics.evidence} />
+                <BarMeter label="지원금 사용 보고" value={activeRecord.metrics.budgetUse} />
+              </div>
+            </div>
+          </section>
+
+          <section className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="rounded-lg border border-[var(--line)] bg-white p-5">
+              <div className="flex items-center gap-2">
+                <PieChart size={20} className="text-[var(--accent)]" />
+                <h3 className="font-semibold">지원금 사용 구성</h3>
+              </div>
+              <div className="mt-5">
+                <Donut items={activeRecord.allocation} />
+              </div>
+            </div>
+          </section>
+
+          <section className="grid gap-4 lg:grid-cols-3">
+            <div className="rounded-lg border border-[var(--line)] bg-white p-5">
+              <ShieldCheck size={20} className="text-[var(--accent)]" />
+              <h3 className="mt-4 font-semibold">검증 상태</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{activeProject.verificationLabelKo}</p>
+            </div>
+            <div className="rounded-lg border border-[var(--line)] bg-white p-5">
+              <TrendingUp size={20} className="text-[var(--accent)]" />
+              <h3 className="mt-4 font-semibold">이번 달 활동</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{activeProject.updates[0]?.activitiesKo}</p>
+            </div>
+            <Link href={`/projects/${activeProject.slug}`} className="rounded-lg border border-[var(--line)] bg-[var(--ink)] p-5 text-white">
+              <FileDown size={20} className="text-[#ffbd8f]" />
+              <h3 className="mt-4 font-semibold">프로젝트 상세 보기</h3>
+              <p className="mt-2 text-sm leading-6 text-white/74">지원 전후 맥락과 증빙 목록을 확인합니다.</p>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">
+                열기 <ArrowRight size={15} />
+              </span>
+            </Link>
+          </section>
+        </div>
+      </section>
+    </div>
+  );
+}
