@@ -66,7 +66,7 @@ select {
 .marketing-panel {
   border: 1px solid var(--line);
   background: var(--panel);
-  border-radius: 16px;
+  border-radius: 8px;
 }
 
 .dark-section {

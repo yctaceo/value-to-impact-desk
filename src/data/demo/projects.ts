@@ -187,7 +187,7 @@ export const demoProjects: ProjectDetail[] = [
     currentNeedKo: "기업 ESG 기프트, ODM/OEM 구매, 정기 캠페인",
     currentNeedEn: "Corporate ESG gifts, ODM/OEM procurement, recurring campaigns",
     imageUrl:
-      "https://images.unsplash.com/photo-1607006483224-16bc32c93691?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1400&q=80",
     imageAltKo: "친환경 비누와 생활용품",
     imageAltEn: "Eco-friendly soaps and lifestyle products",
     provenance: "public-source",

@@ -108,7 +108,7 @@ export const profiles: ImpactProfile[] = [
     verificationStatus: "Not Field Verified",
     lastUpdated: "2026-07-09",
     imageUrl:
-      "https://images.unsplash.com/photo-1607006483224-16bc32c93691?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80",
     imageAlt: "친환경 비누와 생활용품",
     problemLabel: "발달장애 / 환경",
     beneficiaryLabel: "발달장애인 근로자",
