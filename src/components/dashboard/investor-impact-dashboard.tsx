@@ -405,50 +405,48 @@ export function InvestorImpactDashboard({
     .toLowerCase()}-csr-impact-brief.pdf`;
 
   return (
-    <div className="space-y-8">
-      <section className="grid gap-5 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+    <div className="space-y-6">
+      <section className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
           <p className="eyebrow">Investor dashboard</p>
-          <h1 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-5xl">
+          <h1 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-4xl">
             내가 지원한 비영리 프로젝트의 변화를 관리합니다.
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-[var(--muted)]">
-            포트폴리오 카드를 선택하면 활동 수치, 지표 그래프, 예산 구성, 보고서 상태가 같은 화면에서 즉시 바뀝니다.
+          <p className="mt-3 max-w-3xl leading-7 text-[var(--muted)]">
+            카드를 선택하면 핵심 수치, 그래프, 예산 구성, PDF 보고서가 즉시 바뀝니다.
           </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <div className="panel p-4">
+        <div className="grid gap-3 sm:grid-cols-3 lg:w-[520px]">
+          <div className="panel p-3">
             <p className="text-sm text-[var(--muted)]">지원 포트폴리오</p>
-            <p className="mt-2 text-2xl font-semibold">{impactRecords.length}개</p>
+            <p className="mt-1 text-xl font-semibold">{impactRecords.length}개</p>
           </div>
-          <div className="panel p-4">
+          <div className="panel p-3">
             <p className="text-sm text-[var(--muted)]">누적 지원</p>
-            <p className="mt-2 text-2xl font-semibold">{formatKrw(totals.support)}</p>
+            <p className="mt-1 text-xl font-semibold">{formatKrw(totals.support)}</p>
           </div>
-          <div className="panel p-4">
+          <div className="panel p-3">
             <p className="text-sm text-[var(--muted)]">평균 증빙 준비도</p>
-            <p className="mt-2 text-2xl font-semibold">{totals.evidence}%</p>
+            <p className="mt-1 text-xl font-semibold">{totals.evidence}%</p>
           </div>
         </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[320px_1fr]">
-        <aside className="grid h-fit gap-3">
-          <div className="rounded-lg border border-[var(--line)] bg-white p-4">
+      <section className="grid gap-5 lg:grid-cols-[300px_1fr]">
+        <aside className="grid h-fit gap-2">
+          <div className="rounded-lg border border-[var(--line)] bg-white p-3">
             <p className="font-semibold">내가 지원한 비영리기업</p>
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
-              카드를 선택하면 오른쪽 분석 패널이 해당 조직 기준으로 바뀝니다.
-            </p>
+            <p className="mt-1 text-sm leading-5 text-[var(--muted)]">선택한 조직의 데이터로 오른쪽 패널이 바뀝니다.</p>
           </div>
           {impactRecords.map((record) => {
             const project = projects.find((item) => item.slug === record.slug);
-            const selected = record.slug === activeSlug;
+            const selected = record.slug === activeRecord.slug;
             if (!project) return null;
             return (
               <Link
                 key={record.slug}
                 href={`/dashboard?project=${record.slug}`}
-                className={`rounded-lg border p-4 text-left transition ${
+                className={`rounded-lg border p-3 text-left transition ${
                   selected
                     ? "border-[var(--accent)] bg-[var(--ink)] text-white shadow-[0_18px_60px_rgba(32,26,32,0.18)]"
                     : "border-[var(--line)] bg-white hover:border-[var(--accent)]"
@@ -457,11 +455,8 @@ export function InvestorImpactDashboard({
                 <p className={`text-xs font-semibold uppercase ${selected ? "text-[#ffbd8f]" : "text-[var(--accent)]"}`}>
                   {record.label}
                 </p>
-                <h2 className="korean-copy mt-2 text-lg font-semibold leading-6">{project.organizationKo}</h2>
-                <p className={`mt-2 text-sm leading-6 ${selected ? "text-white/74" : "text-[var(--muted)]"}`}>
-                  {project.currentNeedKo}
-                </p>
-                <div className="mt-4 flex items-center justify-between gap-3 text-sm">
+                <h2 className="korean-copy mt-1 text-base font-semibold leading-6">{project.organizationKo}</h2>
+                <div className="mt-3 flex items-center justify-between gap-3 text-sm">
                   <span>{record.supportType}</span>
                   <strong>{formatKrw(record.supportAmount)}</strong>
                 </div>
@@ -470,45 +465,44 @@ export function InvestorImpactDashboard({
           })}
         </aside>
 
-        <div className="grid gap-6">
-          <section className="rounded-lg border border-[var(--line)] bg-white p-5">
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
-              <div>
-                <p className="text-sm font-semibold text-[var(--accent)]">{activeRecord.supportType}</p>
-                <h2 className="korean-copy mt-2 text-3xl font-semibold leading-tight">{activeProject.titleKo}</h2>
-                <p className="mt-3 max-w-3xl leading-7 text-[var(--muted)]">{activeProject.oneLineImpactKo}</p>
+        <div className="grid gap-5">
+          <section className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="rounded-lg border border-[var(--line)] bg-white p-4">
+              <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+                <div>
+                  <p className="text-sm font-semibold text-[var(--accent)]">{activeRecord.supportType}</p>
+                  <h2 className="korean-copy mt-1 text-2xl font-semibold leading-tight">{activeProject.titleKo}</h2>
+                </div>
+                <a
+                  href={pdfHref}
+                  download={pdfFileName}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--ink)] px-4 py-2 text-sm font-semibold text-white"
+                >
+                  <Download size={16} />
+                  CSR 보고서 PDF 다운로드
+                </a>
               </div>
-              <a
-                href={pdfHref}
-                download={pdfFileName}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--ink)] px-4 py-2 text-sm font-semibold text-white"
-              >
-                <Download size={16} />
-                CSR 보고서 PDF 다운로드
-              </a>
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">{activeRecord.metrics.primary}</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeRecord.metrics.primaryValue}</p>
+                </div>
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">{activeRecord.metrics.secondary}</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeRecord.metrics.secondaryValue}</p>
+                </div>
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">보고서 준비도</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeRecord.reportReady}%</p>
+                </div>
+                <div className="rounded-md bg-[#fbfaf8] p-3">
+                  <p className="text-sm text-[var(--muted)]">최근 업데이트</p>
+                  <p className="mt-1 text-2xl font-semibold">{activeProject.latestUpdate}</p>
+                </div>
+              </div>
             </div>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-4">
-              <div className="rounded-md bg-[#fbfaf8] p-4">
-                <p className="text-sm text-[var(--muted)]">{activeRecord.metrics.primary}</p>
-                <p className="mt-2 text-2xl font-semibold">{activeRecord.metrics.primaryValue}</p>
-              </div>
-              <div className="rounded-md bg-[#fbfaf8] p-4">
-                <p className="text-sm text-[var(--muted)]">{activeRecord.metrics.secondary}</p>
-                <p className="mt-2 text-2xl font-semibold">{activeRecord.metrics.secondaryValue}</p>
-              </div>
-              <div className="rounded-md bg-[#fbfaf8] p-4">
-                <p className="text-sm text-[var(--muted)]">보고서 준비도</p>
-                <p className="mt-2 text-2xl font-semibold">{activeRecord.reportReady}%</p>
-              </div>
-              <div className="rounded-md bg-[#fbfaf8] p-4">
-                <p className="text-sm text-[var(--muted)]">최근 업데이트</p>
-                <p className="mt-2 text-2xl font-semibold">{activeProject.latestUpdate}</p>
-              </div>
-            </div>
-          </section>
-
-          <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
             <div className="rounded-lg border border-[var(--line)] bg-white p-5">
               <div className="flex items-center gap-2">
                 <LineChart size={20} className="text-[var(--accent)]" />
@@ -521,7 +515,9 @@ export function InvestorImpactDashboard({
                 <BarMeter label="지원금 사용 보고" value={activeRecord.metrics.budgetUse} />
               </div>
             </div>
+          </section>
 
+          <section className="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
             <div className="rounded-lg border border-[var(--line)] bg-white p-5">
               <div className="flex items-center gap-2">
                 <PieChart size={20} className="text-[var(--accent)]" />

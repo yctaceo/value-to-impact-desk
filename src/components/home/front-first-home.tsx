@@ -7,25 +7,33 @@ import {
   CheckCircle2,
   ClipboardList,
   FileDown,
-  FileText,
   FolderCheck,
-  Handshake,
   Search,
-  TrendingUp,
-  UploadCloud,
 } from "lucide-react";
 import { getFeaturedDemoProjects } from "@/data/demo/projects";
 import type { Lang } from "@/lib/i18n";
 import { pickLang } from "@/lib/i18n";
 
-const companyTasks = ["지원 프로젝트 비교", "검증 상태 확인", "월간 변화 추적", "CSR 보고서 다운로드"];
-const organizationTasks = ["조직 프로필 등록", "활동 보고 제출", "증빙자료 업로드", "기업 문의 확인"];
-
 const chartBars: Array<[string, number]> = [
-  ["고용·참여", 82],
-  ["활동 증빙", 74],
-  ["예산 보고", 68],
-  ["CSR 준비", 86],
+  ["활동", 82],
+  ["증빙", 74],
+  ["예산", 68],
+  ["보고", 86],
+];
+
+const steps = [
+  {
+    title: "프로젝트를 선택합니다",
+    body: "공개자료 기반 프로젝트를 보고 기업의 후원 목적과 맞는 대상을 고릅니다.",
+  },
+  {
+    title: "변화를 추적합니다",
+    body: "지원 이후의 활동, 참여자 변화, 예산 사용, 증빙 상태를 월별로 봅니다.",
+  },
+  {
+    title: "보고서로 정리합니다",
+    body: "CSR 보고서에 바로 넣을 수 있는 요약과 근거자료를 다운로드합니다.",
+  },
 ];
 
 function ActionLink({
@@ -55,89 +63,24 @@ function ActionLink({
   );
 }
 
-function UserPathCard({
-  icon: Icon,
-  title,
-  body,
-  tasks,
-  href,
-  cta,
-  dark = false,
-}: {
-  icon: typeof BriefcaseBusiness;
-  title: string;
-  body: string;
-  tasks: string[];
-  href: string;
-  cta: string;
-  dark?: boolean;
-}) {
-  return (
-    <div
-      className={`grid gap-5 rounded-lg border p-5 md:grid-cols-[auto_1fr_auto] md:items-center ${
-        dark
-          ? "border-[#2e2a37] bg-[var(--ink)] text-white"
-          : "border-[var(--line)] bg-white text-[var(--foreground)]"
-      }`}
-    >
-      <div
-        className={`flex h-12 w-12 items-center justify-center rounded-md ${
-          dark ? "bg-white text-[var(--ink)]" : "bg-[var(--accent-soft)] text-[var(--accent)]"
-        }`}
-      >
-        <Icon size={22} />
-      </div>
-      <div>
-        <h2 className="korean-copy text-2xl font-semibold leading-tight">{title}</h2>
-        <p className={`mt-2 leading-7 ${dark ? "text-white/74" : "text-[var(--muted)]"}`}>
-          {body}
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {tasks.map((task) => (
-            <span
-              key={task}
-              className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold ${
-                dark ? "bg-white/10 text-white" : "bg-[#f6f2ed] text-[var(--foreground)]"
-              }`}
-            >
-              <CheckCircle2 size={13} className={dark ? "text-[#ffbd8f]" : "text-[var(--accent)]"} />
-              {task}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="md:justify-self-end">
-        <ActionLink href={href} tone={dark ? "light" : "dark"}>
-          {cta}
-        </ActionLink>
-      </div>
-    </div>
-  );
-}
-
 function DashboardChartPreview({ dark = false }: { dark?: boolean }) {
   const linePoints = "0,92 44,78 88,82 132,55 176,46 220,28 264,34";
-  const baseClass = dark
-    ? "border-white/12 bg-white/8 text-white"
-    : "border-[var(--line)] bg-white text-[var(--foreground)]";
 
   return (
-    <div className={`rounded-lg border p-5 ${baseClass}`}>
+    <div className={`rounded-lg border p-5 ${dark ? "border-white/12 bg-white/8 text-white" : "border-[var(--line)] bg-white"}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className={`text-xs font-semibold uppercase ${dark ? "text-[#ffbd8f]" : "text-[var(--accent)]"}`}>
-            Dashboard preview
+            Impact dashboard
           </p>
-          <h3 className="korean-copy mt-2 text-xl font-semibold leading-7">
-            후원 포트폴리오 임팩트 추이
-          </h3>
+          <h3 className="korean-copy mt-2 text-xl font-semibold leading-7">후원 이후의 변화</h3>
         </div>
         <span className={`rounded-md px-3 py-2 text-xs font-semibold ${dark ? "bg-white text-[var(--ink)]" : "bg-[var(--accent)] text-white"}`}>
           86%
         </span>
       </div>
 
-      <svg viewBox="0 0 264 110" className="mt-5 h-36 w-full" role="img" aria-label="Impact dashboard trend chart">
+      <svg viewBox="0 0 264 110" className="mt-5 h-32 w-full" role="img" aria-label="Impact trend chart">
         {[22, 48, 74, 100].map((y) => (
           <line key={y} x1="0" x2="264" y1={y} y2={y} stroke={dark ? "rgba(255,255,255,.16)" : "#e6ded4"} />
         ))}
@@ -155,19 +98,11 @@ function DashboardChartPreview({ dark = false }: { dark?: boolean }) {
         })}
       </svg>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 grid gap-3 sm:grid-cols-4">
         {chartBars.map(([label, value]) => (
           <div key={label} className={`rounded-md p-3 ${dark ? "bg-white/8" : "bg-[#fbfaf8]"}`}>
-            <div className="flex items-center justify-between gap-2 text-sm">
-              <span className="font-semibold">{label}</span>
-              <span className={dark ? "text-white/70" : "text-[var(--muted)]"}>{value}%</span>
-            </div>
-            <div className={`mt-2 h-2 overflow-hidden rounded-full ${dark ? "bg-white/12" : "bg-[#ebe4dc]"}`}>
-              <div
-                className="h-full rounded-full"
-                style={{ width: `${value}%`, backgroundColor: dark ? "#ffbd8f" : "var(--accent)" }}
-              />
-            </div>
+            <p className={`text-xs ${dark ? "text-white/62" : "text-[var(--muted)]"}`}>{label}</p>
+            <p className="mt-1 text-lg font-semibold">{value}%</p>
           </div>
         ))}
       </div>
@@ -175,103 +110,46 @@ function DashboardChartPreview({ dark = false }: { dark?: boolean }) {
   );
 }
 
-function HomeWorkspace({ lang }: { lang: Lang }) {
-  const [first, second] = getFeaturedDemoProjects();
-
+function AudienceCard({
+  icon: Icon,
+  title,
+  body,
+  href,
+  cta,
+  dark = false,
+}: {
+  icon: typeof BriefcaseBusiness;
+  title: string;
+  body: string;
+  href: string;
+  cta: string;
+  dark?: boolean;
+}) {
   return (
-    <div className="overflow-hidden rounded-lg border border-[var(--line)] bg-white shadow-[0_24px_80px_rgba(32,26,32,0.12)]">
-      <div className="flex items-center justify-between gap-4 border-b border-[var(--line)] bg-[#fbfaf8] px-5 py-4">
+    <div
+      className={`rounded-lg border p-5 ${
+        dark ? "border-[#2e2a37] bg-[var(--ink)] text-white" : "border-[var(--line)] bg-white"
+      }`}
+    >
+      <div className="flex items-start gap-4">
+        <span
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md ${
+            dark ? "bg-white text-[var(--ink)]" : "bg-[var(--accent-soft)] text-[var(--accent)]"
+          }`}
+        >
+          <Icon size={20} />
+        </span>
         <div>
-          <p className="text-sm font-semibold text-[var(--ink)]">
-            {pickLang(lang, "내 임팩트 포트폴리오", "My impact portfolio")}
-          </p>
-          <p className="text-xs text-[var(--muted)]">
-            {pickLang(lang, "지원한 프로젝트의 변화와 보고서를 한곳에서", "Updates and reports for supported projects")}
+          <h2 className="korean-copy text-xl font-semibold leading-7">{title}</h2>
+          <p className={`mt-2 text-sm leading-6 ${dark ? "text-white/72" : "text-[var(--muted)]"}`}>
+            {body}
           </p>
         </div>
-        <span className="rounded-md bg-[var(--accent)] px-3 py-2 text-xs font-semibold text-white">
-          {pickLang(lang, "이번 달", "This month")}
-        </span>
       </div>
-
-      <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[1.05fr_0.95fr]">
-        <section className="bg-white p-5">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="font-semibold">{pickLang(lang, "지원 중인 프로젝트", "Supported projects")}</h3>
-            <Link href="/dashboard" className="text-sm font-semibold text-[var(--accent)]">
-              {pickLang(lang, "관리하기", "Manage")}
-            </Link>
-          </div>
-
-          <div className="mt-4 grid gap-3">
-            {[first, second].map((project, index) => (
-              <Link
-                key={project.id}
-                href={`/projects/${project.slug}`}
-                className="grid gap-3 rounded-md border border-[var(--line)] p-3 transition hover:border-[var(--accent)] sm:grid-cols-[90px_1fr]"
-              >
-                <div className="h-20 overflow-hidden rounded-md bg-[#ece7df]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={project.imageUrl}
-                    alt={pickLang(lang, project.imageAltKo, project.imageAltEn)}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-md bg-[#f5e9ff] px-2 py-1 text-xs font-semibold text-[#6935a6]">
-                      {index === 0 ? "Evidence review" : "Public source"}
-                    </span>
-                    <span className="text-xs font-semibold text-[var(--muted)]">
-                      {project.latestUpdate}
-                    </span>
-                  </div>
-                  <p className="korean-copy mt-2 text-sm font-semibold leading-5">
-                    {pickLang(lang, project.titleKo, project.titleEn)}
-                  </p>
-                  <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-                    {pickLang(lang, project.currentNeedKo, project.currentNeedEn)}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="grid bg-white">
-          <div className="border-b border-[var(--line)] p-5">
-            <div className="flex items-center gap-2">
-              <TrendingUp size={18} className="text-[var(--accent)]" />
-              <h3 className="font-semibold">{pickLang(lang, "Tracing Impact", "Tracing Impact")}</h3>
-            </div>
-            <div className="mt-4">
-              <DashboardChartPreview />
-            </div>
-          </div>
-
-          <div className="bg-[#2f2338] p-5 text-white">
-            <p className="text-xs font-semibold uppercase text-[#ffbd8f]">Ready to export</p>
-            <h3 className="korean-copy mt-2 text-2xl font-semibold leading-8">
-              {pickLang(lang, "7월 임팩트 요약이 준비되었습니다.", "Your July impact brief is ready.")}
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-white/74">
-              {pickLang(
-                lang,
-                "지원한 프로젝트의 활동, 지출, 증빙 상태를 CSR 보고서 형식으로 확인하세요.",
-                "Review activities, spending and evidence status in a CSR-ready format.",
-              )}
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <ActionLink href="/dashboard" tone="light">
-                {pickLang(lang, "대시보드 열기", "Open dashboard")}
-              </ActionLink>
-              <ActionLink href="/sample-report" tone="light">
-                {pickLang(lang, "샘플 리포트", "Sample report")}
-              </ActionLink>
-            </div>
-          </div>
-        </section>
+      <div className="mt-5">
+        <ActionLink href={href} tone={dark ? "light" : "dark"}>
+          {cta}
+        </ActionLink>
       </div>
     </div>
   );
@@ -287,13 +165,13 @@ function ProjectGallery({ lang }: { lang: Lang }) {
           <div className="max-w-3xl">
             <p className="eyebrow">Curated projects</p>
             <h2 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-5xl">
-              {pickLang(lang, "실제로 활동하는 프로젝트를 엄선하였습니다.", "Curated projects already doing the work.")}
+              {pickLang(lang, "실제로 활동하는 프로젝트를 먼저 확인하세요.", "Start with projects already doing the work.")}
             </h2>
             <p className="mt-4 text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "지원이 필요한 이유, 최근 활동, 검증 상태를 확인하고 다음 파트너를 선택하세요.",
-                "Review why support is needed, what changed recently and what has been verified.",
+                "후원 목적, 최근 활동, 필요한 지원을 한눈에 비교할 수 있습니다.",
+                "Compare purpose, recent activity, and support needs at a glance.",
               )}
             </p>
           </div>
@@ -340,9 +218,9 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
   return (
     <>
       <section className="bg-[var(--background)]">
-        <div className="container-page grid min-h-[calc(100vh-68px)] gap-10 py-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+        <div className="container-page grid gap-10 py-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div>
-            <p className="eyebrow">Social impact, made accountable</p>
+            <p className="eyebrow">Social Impact Tracing Map</p>
             <h1 className="korean-copy mt-4 text-4xl font-semibold leading-tight md:text-6xl">
               {lang === "ko" ? (
                 <>
@@ -366,41 +244,61 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
                 <Search size={16} />
                 {pickLang(lang, "프로젝트 찾기", "Find projects")}
               </ActionLink>
-              <ActionLink href="/apply" tone="outline">
-                <Building2 size={16} />
-                {pickLang(lang, "조직 등록하기", "Register organization")}
+              <ActionLink href="/login" tone="outline">
+                <FolderCheck size={16} />
+                {pickLang(lang, "임팩트 관리하기", "Manage impact")}
               </ActionLink>
             </div>
           </div>
 
-          <HomeWorkspace lang={lang} />
+          <DashboardChartPreview />
+        </div>
 
-          <div className="grid gap-4 lg:col-span-2 lg:grid-cols-2">
-            <UserPathCard
-              icon={BriefcaseBusiness}
-              title={pickLang(lang, "기업·후원자", "Companies and donors")}
-              body={pickLang(
-                lang,
-                "지원한 프로젝트의 활동과 성과를 한곳에서 추적하고, 내부 보고에 필요한 파일을 바로 내려받습니다.",
-                "Track the projects you support and download files for internal reporting.",
-              )}
-              tasks={companyTasks}
-              href="/login"
-              cta={pickLang(lang, "임팩트 관리하기", "Manage impact")}
-              dark
-            />
-            <UserPathCard
-              icon={Building2}
-              title={pickLang(lang, "비영리·사회적기업", "Nonprofits and social enterprises")}
-              body={pickLang(
-                lang,
-                "월간 활동과 증빙자료를 정리해 기업과 후원자가 읽을 수 있는 보고서로 만듭니다.",
-                "Turn monthly activities and evidence into reports companies and donors can read.",
-              )}
-              tasks={organizationTasks}
-              href="/apply"
-              cta={pickLang(lang, "프로필 시작하기", "Start profile")}
-            />
+        <div className="container-page grid gap-4 pb-14 lg:grid-cols-2">
+          <AudienceCard
+            icon={BriefcaseBusiness}
+            title={pickLang(lang, "기업·후원자", "Companies and donors")}
+            body={pickLang(
+              lang,
+              "지원한 프로젝트의 변화와 보고서 상태를 한 화면에서 확인합니다.",
+              "Track supported projects and report readiness in one view.",
+            )}
+            href="/login"
+            cta={pickLang(lang, "로그인 후 관리", "Sign in to manage")}
+            dark
+          />
+          <AudienceCard
+            icon={Building2}
+            title={pickLang(lang, "비영리·사회적기업", "Nonprofits and social enterprises")}
+            body={pickLang(
+              lang,
+              "월간 활동과 증빙자료를 정리해 기업이 읽을 수 있는 보고서로 만듭니다.",
+              "Turn monthly activity and evidence into company-ready reports.",
+            )}
+            href="/apply"
+            cta={pickLang(lang, "조직 등록하기", "Register organization")}
+          />
+        </div>
+      </section>
+
+      <section className="bg-white py-16">
+        <div className="container-page">
+          <div className="max-w-3xl">
+            <p className="eyebrow">How it works</p>
+            <h2 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-5xl">
+              {pickLang(lang, "필요한 정보만 단계별로 확인합니다.", "See only what matters at each step.")}
+            </h2>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {steps.map((step, index) => (
+              <div key={step.title} className="rounded-lg border border-[var(--line)] bg-[#fbfaf8] p-5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[var(--accent-soft)] text-sm font-semibold text-[var(--accent)]">
+                  {index + 1}
+                </div>
+                <h3 className="mt-5 text-xl font-semibold">{step.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{step.body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -415,68 +313,38 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
             <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "후원금이 어디에 쓰였는지, 어떤 활동이 진행됐는지, 다음 달에는 무엇이 필요한지 한 화면에서 확인할 수 있습니다.",
-                "See where support was used, what happened this month and what the project needs next.",
+                "후원금 사용, 활동 변화, 증빙 준비도, CSR 보고서 상태를 같은 화면에서 확인할 수 있습니다.",
+                "Review spending, activity changes, evidence readiness, and CSR report status in one place.",
               )}
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <ActionLink href="/dashboard">
-                <FolderCheck size={16} />
-                {pickLang(lang, "내 임팩트 보기", "View my impact")}
-              </ActionLink>
-              <ActionLink href="/projects/compare" tone="outline">
                 <BarChart3 size={16} />
-                {pickLang(lang, "프로젝트 비교", "Compare projects")}
+                {pickLang(lang, "대시보드 보기", "Open dashboard")}
+              </ActionLink>
+              <ActionLink href="/sample-report" tone="outline">
+                <FileDown size={16} />
+                {pickLang(lang, "보고서 샘플", "Sample report")}
               </ActionLink>
             </div>
           </div>
 
-          <div className="rounded-lg border border-[#d7c7e5] bg-[#2f2338] p-5 shadow-[0_24px_80px_rgba(32,26,32,0.16)]">
-            <DashboardChartPreview dark />
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              {[
-                ["지원 프로젝트", "9개"],
-                ["평균 증빙 준비", "78%"],
-                ["보고서 상태", "다운로드 가능"],
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-md bg-white/8 p-3 text-white">
-                  <p className="text-xs text-white/60">{label}</p>
-                  <p className="mt-2 text-lg font-semibold">{value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <DashboardChartPreview dark />
         </div>
       </section>
 
       <section className="bg-white py-16">
-        <div className="container-page grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
-          <div className="order-2 rounded-lg border border-[var(--line)] bg-[#fbfaf8] p-5 lg:order-1">
-            {[
-              { icon: UploadCloud, title: "활동 데이터", body: "월간 활동, 참여자 변화, 지출 내역을 같은 구조로 정리합니다." },
-              { icon: FileText, title: "CSR 보고서 포맷", body: "연말 보고서에 붙일 수 있는 요약, 지표, 증빙 목록을 자동 구성합니다." },
-              { icon: Handshake, title: "파트너 커뮤니케이션", body: "기업 문의, 추가 자료 요청, 다음 지원 계획을 한곳에서 확인합니다." },
-            ].map(({ icon: Icon, title, body }) => (
-              <div key={title} className="mb-3 rounded-md bg-white p-4 last:mb-0">
-                <div className="flex items-center gap-3">
-                  <Icon size={20} className="text-[var(--accent)]" />
-                  <p className="font-semibold">{title}</p>
-                </div>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{body}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="order-1 lg:order-2">
-            <p className="eyebrow">Impact reports</p>
+        <div className="container-page grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="eyebrow">CSR reports</p>
             <h2 className="korean-copy mt-3 text-3xl font-semibold leading-tight md:text-5xl">
-              {pickLang(lang, "사회적기업의 활동을 한 번에 보고서로 받아보세요.", "Receive social enterprise activity as a ready report.")}
+              {pickLang(lang, "사회적기업의 활동을 보고서로 받아보세요.", "Receive social enterprise activity as a report.")}
             </h2>
             <p className="mt-5 text-lg leading-8 text-[var(--muted)]">
               {pickLang(
                 lang,
-                "연말 CSR 보고서에 맞춰 프로젝트 활동, 사용 내역, 성과 지표, 증빙자료를 다운로드할 수 있습니다.",
-                "Download project activity, spending, outcome metrics and evidence in a CSR-friendly format.",
+                "활동, 지출, 참여자 변화, 증빙자료를 CSR 보고서 포맷으로 정리합니다.",
+                "Organize activity, spending, participant change, and evidence in a CSR-ready format.",
               )}
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -489,6 +357,19 @@ export function FrontFirstHome({ lang }: { lang: Lang }) {
                 {pickLang(lang, "월간보고 작성", "Submit monthly report")}
               </ActionLink>
             </div>
+          </div>
+
+          <div className="rounded-lg border border-[var(--line)] bg-[#fbfaf8] p-5">
+            {[
+              "활동과 지출을 같은 구조로 정리",
+              "증빙 상태와 출처를 보고서에 함께 표시",
+              "CSR 담당자가 읽기 쉬운 요약으로 변환",
+            ].map((item) => (
+              <div key={item} className="flex gap-3 border-b border-[var(--line)] py-4 last:border-b-0">
+                <CheckCircle2 size={18} className="mt-1 shrink-0 text-[var(--accent)]" />
+                <p className="leading-6">{item}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
