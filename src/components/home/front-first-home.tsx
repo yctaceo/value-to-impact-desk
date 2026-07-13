@@ -67,10 +67,16 @@ function DashboardChartPreview({ dark = false }: { dark?: boolean }) {
   const linePoints = "0,92 44,78 88,82 132,55 176,46 220,28 264,34";
 
   return (
-    <div className={`rounded-lg border p-5 ${dark ? "border-white/12 bg-white/8 text-white" : "border-[var(--line)] bg-white"}`}>
+    <div
+      className={`rounded-lg border p-5 ${
+        dark
+          ? "border-[#3f344a] bg-[var(--ink)] text-white shadow-[0_24px_70px_rgba(32,26,40,0.18)]"
+          : "border-[var(--line)] bg-white"
+      }`}
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className={`text-xs font-semibold uppercase ${dark ? "text-[#ffbd8f]" : "text-[var(--accent)]"}`}>
+          <p className={`text-xs font-semibold uppercase ${dark ? "text-[#ffc08f]" : "text-[var(--accent)]"}`}>
             Impact dashboard
           </p>
           <h3 className="korean-copy mt-2 text-xl font-semibold leading-7">후원 이후의 변화</h3>
@@ -87,21 +93,21 @@ function DashboardChartPreview({ dark = false }: { dark?: boolean }) {
         <polyline
           points={linePoints}
           fill="none"
-          stroke={dark ? "#ffbd8f" : "var(--accent)"}
+          stroke={dark ? "#ffb16d" : "var(--accent)"}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="5"
         />
         {linePoints.split(" ").map((point) => {
           const [cx, cy] = point.split(",");
-          return <circle key={point} cx={cx} cy={cy} r="4" fill={dark ? "white" : "var(--ink)"} />;
+          return <circle key={point} cx={cx} cy={cy} r="4" fill={dark ? "#fff7ed" : "var(--ink)"} />;
         })}
       </svg>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-4">
         {chartBars.map(([label, value]) => (
-          <div key={label} className={`rounded-md p-3 ${dark ? "bg-white/8" : "bg-[#fbfaf8]"}`}>
-            <p className={`text-xs ${dark ? "text-white/62" : "text-[var(--muted)]"}`}>{label}</p>
+          <div key={label} className={`rounded-md p-3 ${dark ? "bg-white/10" : "bg-[#fbfaf8]"}`}>
+            <p className={`text-xs ${dark ? "text-white/72" : "text-[var(--muted)]"}`}>{label}</p>
             <p className="mt-1 text-lg font-semibold">{value}%</p>
           </div>
         ))}
