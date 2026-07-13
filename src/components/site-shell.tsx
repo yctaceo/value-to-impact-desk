@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { LayoutDashboard, Menu, ShieldCheck, UserRound } from "lucide-react";
+import { Suspense } from "react";
+import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 
 const navItems = [
-  ["프로젝트", "/profiles"],
-  ["작동 방식", "/#how-it-works"],
-  ["검증 원칙", "/#trust"],
-  ["대상별 활용", "/#audiences"],
+  ["Home", "/"],
+  ["Projects", "/projects"],
+  ["Dashboard", "/dashboard"],
+  ["About Us", "/about"],
 ];
 
 export function SiteHeader() {
@@ -26,28 +28,28 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <span className="hidden rounded-md border border-[var(--line)] bg-white px-2 py-2 text-xs font-semibold text-[var(--muted)] sm:inline-flex">
-            KR
-          </span>
-          <Link
-            href="/dashboard"
-            className="hidden items-center gap-2 rounded-md border border-[var(--line)] bg-white px-3 py-2 text-sm font-semibold sm:inline-flex"
+          <Suspense
+            fallback={
+              <span className="rounded-md border border-[var(--line)] bg-white px-2 py-2 text-xs font-semibold text-[var(--muted)]">
+                KR
+              </span>
+            }
           >
-            <LayoutDashboard size={16} />
-            Dashboard
-          </Link>
+            <LanguageSwitcher />
+          </Suspense>
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 rounded-md bg-[var(--ink)] px-3 py-2 text-sm font-semibold text-white"
+            className="hidden items-center gap-2 rounded-md border border-[var(--line)] bg-white px-3 py-2 text-sm font-semibold sm:inline-flex"
           >
             <UserRound size={16} />
             Login
           </Link>
           <Link
             href="/apply"
-            className="hidden rounded-md bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white xl:inline-flex"
+            className="inline-flex items-center gap-2 rounded-md bg-[var(--ink)] px-3 py-2 text-sm font-semibold text-white"
           >
-            우리 조직 등록
+            <LayoutDashboard size={16} />
+            Register a Project
           </Link>
           <details className="relative lg:hidden">
             <summary className="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-md border border-[var(--line)] bg-white">
@@ -67,7 +69,7 @@ export function SiteHeader() {
                 href="/apply"
                 className="mt-2 block rounded bg-[var(--ink)] px-3 py-2 text-sm font-semibold text-white"
               >
-                우리 조직 등록
+                Register a Project
               </Link>
             </div>
           </details>
@@ -91,15 +93,15 @@ export function SiteFooter() {
         </div>
         <div className="text-sm leading-7 text-[var(--muted)]">
           <p className="font-semibold text-[var(--foreground)]">Explore</p>
-          <Link href="/profiles" className="block">프로젝트</Link>
-          <Link href="/#how-it-works" className="block">작동 방식</Link>
+          <Link href="/projects" className="block">프로젝트</Link>
+          <Link href="/projects" className="block">Projects</Link>
           <Link href="/dashboard" className="block">Dashboard</Link>
         </div>
         <div className="text-sm leading-7 text-[var(--muted)]">
           <p className="font-semibold text-[var(--foreground)]">For</p>
           <Link href="/apply" className="block">Organizations</Link>
-          <Link href="/profiles" className="block">Donors & Investors</Link>
-          <Link href="/dashboard?role=company_csr" className="block">Companies & CSR</Link>
+          <Link href="/projects" className="block">Donors & Investors</Link>
+          <Link href="/dashboard/company" className="block">Companies & CSR</Link>
         </div>
         <div className="text-sm leading-7 text-[var(--muted)]">
           <p className="font-semibold text-[var(--foreground)]">Trust</p>
