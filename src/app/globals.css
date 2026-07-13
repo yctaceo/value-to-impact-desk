@@ -33,6 +33,14 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
+h1,
+h2,
+h3,
+.korean-copy {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 * {
   box-sizing: border-box;
 }
